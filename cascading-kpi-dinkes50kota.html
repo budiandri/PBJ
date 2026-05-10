@@ -1,0 +1,1409 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cascading KPI — Dinkes Kab. Lima Puluh Kota 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+:root{--bg:#030c1a;--sb:#05111f;--cb:rgba(255,255,255,.04);--cbr:rgba(255,255,255,.08);--ch:rgba(255,255,255,.07);--gold:#f0b429;--gdim:rgba(240,180,41,.14);--teal:#2dd4bf;--tdim:rgba(45,212,191,.14);--grn:#22c55e;--grdim:rgba(34,197,94,.12);--ylw:#f59e0b;--yldim:rgba(245,158,11,.11);--red:#ef4444;--rddim:rgba(239,68,68,.11);--blu:#3b82f6;--bldim:rgba(59,130,246,.11);--pur:#a855f7;--prdim:rgba(168,85,247,.14);--txt:#e2e8f0;--txm:rgba(226,232,240,.5);--txd:rgba(226,232,240,.26);--sbw:264px;--hh:60px}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;overflow-x:hidden}
+/* LOGIN */
+#login-wrap{position:fixed;inset:0;background:var(--bg);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px}
+.login-box{background:rgba(5,17,31,.9);border:1px solid rgba(240,180,41,.25);border-radius:18px;padding:32px 38px;width:100%;max-width:500px;position:relative;overflow:hidden}
+.login-box::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.login-logo{text-align:center;margin-bottom:28px}
+.login-logo-t{font-family:'Cinzel',serif;font-size:20px;font-weight:700;color:var(--gold);letter-spacing:.5px}
+.login-logo-s{font-size:11px;color:var(--txm);margin-top:4px}
+.login-logo-ss{font-size:10px;color:var(--txd);margin-top:2px}
+.login-fg{margin-bottom:14px}
+.login-fl{font-size:10px;color:var(--txm);margin-bottom:5px;display:block;letter-spacing:.4px;text-transform:uppercase}
+.login-fi{width:100%;background:rgba(255,255,255,.05);border:1px solid var(--cbr);border-radius:8px;padding:10px 14px;color:var(--txt);font-family:'DM Sans',sans-serif;font-size:13px;transition:all .2s}
+.login-fi:focus{outline:none;border-color:rgba(240,180,41,.5);background:rgba(240,180,41,.05)}
+.login-btn{width:100%;padding:12px;background:linear-gradient(135deg,var(--gold),#e09e20);border:none;border-radius:9px;color:#000;font-weight:700;font-size:13.5px;cursor:pointer;margin-top:6px;transition:all .2s;font-family:'DM Sans',sans-serif;letter-spacing:.3px}
+.login-btn:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(240,180,41,.35)}
+.login-err{background:var(--rddim);border:1px solid rgba(239,68,68,.3);border-radius:7px;padding:8px 12px;font-size:11px;color:var(--red);margin-top:10px;display:none}
+
+
+
+
+.login-user-row:last-child{border-bottom:none}
+
+
+
+/* SIDEBAR */
+.sb{position:fixed;left:0;top:0;bottom:0;width:var(--sbw);background:var(--sb);border-right:1px solid var(--cbr);display:flex;flex-direction:column;z-index:100;overflow-y:auto}
+.sb-logo{padding:18px 16px 13px;border-bottom:1px solid var(--cbr)}
+.sb-logo-t{font-family:'Cinzel',serif;font-size:12px;font-weight:700;color:var(--gold);letter-spacing:.4px;line-height:1.4}
+.sb-logo-s{font-size:9px;color:var(--txm);margin-top:2px}
+.sb-bdg{display:inline-flex;align-items:center;background:var(--gdim);border:1px solid rgba(240,180,41,.3);border-radius:4px;padding:2px 7px;font-size:8.5px;color:var(--gold);margin-top:7px;letter-spacing:.4px}
+.sb-user{padding:10px 14px;border-bottom:1px solid var(--cbr);background:rgba(240,180,41,.04)}
+.sb-user-nm{font-size:11px;font-weight:600;color:var(--txt)}
+.sb-user-jb{font-size:9px;color:var(--txm);margin-top:1px}
+.sb-nav{padding:10px 7px;flex:1}
+.nav-s{font-size:8.5px;color:var(--txd);letter-spacing:1.5px;padding:7px 7px 3px;text-transform:uppercase}
+.ni{display:flex;align-items:center;gap:9px;padding:8px 11px;border-radius:7px;cursor:pointer;transition:all .2s;margin-bottom:2px;font-size:12px;color:var(--txm)}
+.ni:hover{background:var(--ch);color:var(--txt)}
+.ni.act{background:var(--gdim);color:var(--gold);font-weight:500}
+.ni-ico{font-size:14px;width:18px;text-align:center}
+.sb-ft{padding:10px 14px;border-top:1px solid var(--cbr);font-size:8.5px;color:var(--txd);line-height:1.6;display:flex;justify-content:space-between;align-items:center}
+.logout-btn{background:var(--rddim);border:1px solid rgba(239,68,68,.25);color:var(--red);font-size:8.5px;padding:3px 9px;border-radius:4px;cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif}
+.logout-btn:hover{background:var(--red);color:#fff}
+/* MAIN */
+.main{margin-left:var(--sbw);min-height:100vh;display:flex;flex-direction:column}
+.hdr{height:var(--hh);background:rgba(3,12,26,.93);backdrop-filter:blur(12px);border-bottom:1px solid var(--cbr);display:flex;align-items:center;padding:0 24px;gap:12px;position:sticky;top:0;z-index:50}
+.hdr-t{font-family:'Cinzel',serif;font-size:13px;font-weight:600;color:var(--txt)}
+.hdr-s{font-size:10px;color:var(--txm);margin-top:1px}
+.hdr-r{margin-left:auto;display:flex;align-items:center;gap:10px}
+.hdr-d{font-size:9.5px;color:var(--txm);text-align:right;line-height:1.5}
+.sdot{width:7px;height:7px;border-radius:50%;background:var(--grn);box-shadow:0 0 7px var(--grn);animation:blink 2s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.mc{flex:1;padding:20px 24px}
+.view{display:none}.view.act{display:block}
+.card{background:var(--cb);border:1px solid var(--cbr);border-radius:11px;padding:16px}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:13px}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}
+.g5{display:grid;grid-template-columns:repeat(5,1fr);gap:11px}
+.g2{display:grid;grid-template-columns:repeat(2,1fr);gap:13px}
+.kc{background:var(--cb);border:1px solid var(--cbr);border-radius:11px;padding:15px 17px;position:relative;overflow:hidden;transition:border-color .2s}
+.kc:hover{border-color:rgba(255,255,255,.12)}
+.kc::after{content:'';position:absolute;top:0;left:0;right:0;height:2px}
+.kc.gold::after{background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.kc.teal::after{background:linear-gradient(90deg,transparent,var(--teal),transparent)}
+.kc.grn::after{background:linear-gradient(90deg,transparent,var(--grn),transparent)}
+.kc.red::after{background:linear-gradient(90deg,transparent,var(--red),transparent)}
+.kc-l{font-size:9px;color:var(--txm);letter-spacing:.6px;text-transform:uppercase}
+.kc-v{font-size:23px;font-weight:600;margin:5px 0 2px;font-variant-numeric:tabular-nums}
+.kc-s{font-size:10px;color:var(--txm)}
+.kc-i{position:absolute;right:15px;top:13px;font-size:22px;opacity:.1}
+.pb{height:4px;background:rgba(255,255,255,.07);border-radius:4px;overflow:hidden;margin-top:8px}
+.pb-f{height:100%;border-radius:4px;transition:width .8s}
+.pb-f.teal{background:linear-gradient(90deg,var(--teal),#67e8f9)}
+.pb-f.grn{background:linear-gradient(90deg,var(--grn),#86efac)}
+.pb-f.red{background:var(--red)}
+.tld{width:8px;height:8px;border-radius:50%;display:inline-block;flex-shrink:0}
+.tld.grn{background:var(--grn);box-shadow:0 0 5px var(--grn)}
+.tld.ylw{background:var(--ylw);box-shadow:0 0 5px var(--ylw)}
+.tld.red{background:var(--red);box-shadow:0 0 5px var(--red)}
+.lbdg{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:20px;font-size:8.5px;font-weight:600;letter-spacing:.3px}
+.lbdg.tuj{background:var(--prdim);color:#d8b4fe;border:1px solid rgba(168,85,247,.28)}
+.lbdg.es2{background:var(--bldim);color:#93c5fd;border:1px solid rgba(59,130,246,.28)}
+.lbdg.es3{background:var(--tdim);color:var(--teal);border:1px solid rgba(45,212,191,.28)}
+.lbdg.es4{background:var(--gdim);color:var(--gold);border:1px solid rgba(240,180,41,.28)}
+.lbdg.pg{background:var(--rddim);color:#fca5a5;border:1px solid rgba(239,68,68,.28)}
+.chip{padding:2px 6px;border-radius:4px;font-size:8.5px;font-weight:600;white-space:nowrap}
+.chip.tl{background:var(--tdim);color:var(--teal);border:1px solid rgba(45,212,191,.2)}
+.chip.gl{background:var(--gdim);color:var(--gold);border:1px solid rgba(240,180,41,.2)}
+.chip.gg{background:var(--grdim);color:var(--grn);border:1px solid rgba(34,197,94,.2)}
+.chip.rd{background:var(--rddim);color:var(--red);border:1px solid rgba(239,68,68,.2)}
+.tag{display:inline-block;padding:2px 7px;border-radius:4px;font-size:8.5px;font-weight:600}
+.tag.grn{background:var(--grdim);color:var(--grn);border:1px solid rgba(34,197,94,.2)}
+.tag.ylw{background:var(--yldim);color:var(--ylw);border:1px solid rgba(245,158,11,.2)}
+.tag.red{background:var(--rddim);color:var(--red);border:1px solid rgba(239,68,68,.2)}
+.sh{display:flex;align-items:center;gap:9px;margin-bottom:13px}
+.sh-t{font-family:'Cinzel',serif;font-size:11.5px;font-weight:600;color:var(--gold);letter-spacing:.4px;white-space:nowrap}
+.sh-l{flex:1;height:1px;background:var(--cbr)}
+.tuj-b{background:linear-gradient(135deg,rgba(168,85,247,.13),rgba(59,130,246,.08));border:1px solid rgba(168,85,247,.26);border-radius:13px;padding:18px 24px;display:flex;align-items:center;gap:18px;margin-bottom:18px;position:relative;overflow:hidden}
+.tuj-b::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 80% 50%,rgba(168,85,247,.07),transparent 60%)}
+.tuj-nm{font-family:'Cinzel',serif;font-size:15px;font-weight:600;color:#d8b4fe;line-height:1.35}
+.tuj-ds{font-size:10px;color:rgba(216,180,254,.45);margin-top:3px}
+.tuj-dv{width:1px;height:50px;background:rgba(168,85,247,.18);flex-shrink:0}
+.tuj-r{text-align:center;flex-shrink:0}
+.tuj-v{font-family:'Cinzel',serif;font-size:26px;font-weight:700;color:#d8b4fe;line-height:1}
+.tuj-lb{font-size:8.5px;color:rgba(216,180,254,.4);text-transform:uppercase;letter-spacing:.3px;margin-top:2px}
+/* CASCADE CARDS */
+.cc{background:var(--cb);border:1px solid var(--cbr);border-radius:9px;padding:12px 13px;transition:all .2s}
+.cc:hover{border-color:rgba(255,255,255,.13);background:var(--ch)}
+.cc-t{font-size:10.5px;font-weight:500;margin-bottom:8px;line-height:1.4}
+.cc-i{display:flex;flex-direction:column;gap:5px}
+.ir{display:flex;flex-direction:column;gap:3px;padding:5px 7px;background:rgba(255,255,255,.025);border-radius:5px}
+.ir-top{display:flex;align-items:center;gap:6px;font-size:9px}
+.ir-n{color:var(--txm);flex:1;line-height:1.3}
+.ir-v{font-weight:600;font-size:9px;white-space:nowrap}
+.ir-tw{display:flex;gap:4px;margin-top:2px;flex-wrap:wrap}
+.tw-chip{font-size:8px;padding:1px 5px;border-radius:3px;font-weight:600;white-space:nowrap}
+.tw-chip.grn{background:var(--grdim);color:var(--grn);border:1px solid rgba(34,197,94,.2)}
+.tw-chip.ylw{background:var(--yldim);color:var(--ylw);border:1px solid rgba(245,158,11,.2)}
+.tw-chip.red{background:var(--rddim);color:var(--red);border:1px solid rgba(239,68,68,.2)}
+.tw-chip.dim{background:rgba(255,255,255,.04);color:var(--txd);border:1px solid rgba(255,255,255,.06)}
+.tw-inp-btn{font-size:8px;padding:1px 6px;background:var(--gdim);border:1px solid rgba(240,180,41,.25);color:var(--gold);border-radius:3px;cursor:pointer;white-space:nowrap;transition:all .18s;margin-left:auto}
+.tw-inp-btn:hover{background:var(--gold);color:#000}
+.con-arr{text-align:center;color:var(--txd);font-size:15px;margin:4px 0}
+/* PROGRAM TREE */
+.pt-item{border:1px solid var(--cbr);border-radius:9px;overflow:hidden;margin-bottom:11px}
+.pt-hdr{padding:12px 16px;cursor:pointer;display:flex;align-items:center;gap:11px;transition:background .2s;background:rgba(255,255,255,.023)}
+.pt-hdr:hover{background:var(--ch)}
+.pt-hdr.open{background:rgba(240,180,41,.07);border-bottom:1px solid rgba(240,180,41,.13)}
+.chev{font-size:9px;color:var(--txd);transition:transform .28s;flex-shrink:0}
+.chev.open{transform:rotate(90deg)}
+.pt-nm{font-size:12px;font-weight:500;flex:1;line-height:1.4}
+.pt-info{display:flex;gap:6px;align-items:center;flex-shrink:0}
+.pt-body{display:none;padding:9px;background:rgba(0,0,0,.17)}
+.pt-body.open{display:block}
+.kg-item{border:1px solid rgba(255,255,255,.054);border-radius:7px;overflow:hidden;margin-bottom:7px}
+.kg-hdr{padding:9px 13px;cursor:pointer;display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.016);transition:background .2s}
+.kg-hdr:hover{background:rgba(255,255,255,.038)}
+.kg-hdr.open{background:rgba(45,212,191,.06);border-bottom:1px solid rgba(45,212,191,.13)}
+.kg-nm{font-size:10.5px;font-weight:500;flex:1;color:var(--txt);line-height:1.4}
+.kg-body{display:none;padding:8px;background:rgba(0,0,0,.13)}
+.kg-body.open{display:block}
+/* SK READ-ONLY CARD */
+.sk-card{border:1px solid rgba(255,255,255,.05);border-radius:7px;padding:10px 12px;margin-bottom:7px;background:rgba(255,255,255,.015);transition:border-color .18s}
+.sk-card:hover{border-color:rgba(240,180,41,.15)}
+.sk-card-top{display:flex;align-items:flex-start;gap:8px;margin-bottom:9px}
+.sk-card-num{font-size:8.5px;color:var(--txd);font-weight:700;min-width:22px;flex-shrink:0;margin-top:2px}
+.sk-card-nm{font-size:10.5px;font-weight:500;flex:1;color:var(--txt);line-height:1.4}
+.sk-card-chips{display:flex;gap:4px;flex-wrap:wrap;flex-shrink:0}
+.sk-meta{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:7px}
+.sk-meta-item{background:rgba(255,255,255,.025);border-radius:5px;padding:5px 9px}
+.sk-meta-lbl{font-size:8.5px;color:var(--txd);margin-bottom:2px}
+.sk-meta-val{font-size:10.5px;font-weight:500;color:var(--txt)}
+.sk-desc{font-size:10px;color:var(--txm);line-height:1.5;padding:6px 9px;background:rgba(255,255,255,.02);border-radius:5px;border-left:2px solid var(--teal);margin-bottom:6px}
+.sk-krl-lbl{font-size:8.5px;color:var(--txd);margin-bottom:2px}
+.sk-krl-val{font-size:10px;color:var(--txm);line-height:1.45}
+/* INPUT REALISASI CARDS */
+.sk-sel-card{border:1px solid var(--cbr);border-radius:8px;padding:13px;cursor:pointer;transition:all .18s;background:rgba(255,255,255,.015)}
+.sk-sel-card:hover{border-color:rgba(240,180,41,.35);background:rgba(255,255,255,.03)}
+/* INDIKATOR TW INPUT */
+.tw-input-section{margin-bottom:18px}
+.tw-sas-hdr{font-family:'Cinzel',serif;font-size:11px;font-weight:600;color:var(--gold);margin-bottom:10px;padding:7px 12px;background:var(--gdim);border-radius:7px;border:1px solid rgba(240,180,41,.2)}
+.tw-ind-row{display:flex;align-items:center;gap:8px;padding:8px 12px;border:1px solid rgba(255,255,255,.05);border-radius:6px;margin-bottom:5px;background:rgba(255,255,255,.018)}
+.tw-ind-nm{font-size:10px;color:var(--txm);flex:1;line-height:1.35}
+.tw-ind-tgt{font-size:9px;color:var(--txd);white-space:nowrap}
+.tw-boxes{display:flex;gap:5px;flex-shrink:0}
+.tw-box{display:flex;flex-direction:column;align-items:center;gap:2px}
+.tw-box-lbl{font-size:8px;color:var(--txd);text-align:center}
+.tw-box input{width:70px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:4px;padding:4px 5px;color:var(--txt);font-family:'DM Sans',sans-serif;font-size:10px;text-align:center;transition:all .18s}
+.tw-box input:focus{outline:none;border-color:rgba(240,180,41,.4);background:rgba(240,180,41,.05);color:var(--gold)}
+/* TABLE */
+.dt{width:100%;border-collapse:collapse;font-size:10.5px}
+.dt th{background:rgba(255,255,255,.04);padding:7px 11px;text-align:left;font-size:8.5px;color:var(--txm);letter-spacing:.5px;text-transform:uppercase;border-bottom:1px solid var(--cbr)}
+.dt td{padding:7px 11px;border-bottom:1px solid rgba(255,255,255,.04);vertical-align:middle}
+.dt tr:hover td{background:rgba(255,255,255,.016)}
+.dt .num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.dt .ctr{text-align:center}
+/* MODAL */
+.mover{position:fixed;inset:0;background:rgba(0,0,0,.76);backdrop-filter:blur(5px);z-index:200;display:none;align-items:flex-start;justify-content:center;padding:18px 12px;overflow-y:auto}
+.mover.open{display:flex}
+.modal{background:#071424;border:1px solid rgba(255,255,255,.1);border-radius:14px;width:100%;max-width:900px;padding:22px;position:relative;margin:auto}
+.m-hdr{display:flex;align-items:flex-start;gap:11px;margin-bottom:18px;padding-bottom:12px;border-bottom:1px solid var(--cbr)}
+.m-t{font-family:'Cinzel',serif;font-size:12.5px;font-weight:600;color:var(--gold);flex:1;line-height:1.4}
+.m-s{font-size:9.5px;color:var(--txm);margin-top:3px}
+.m-x{cursor:pointer;color:var(--txm);font-size:19px;transition:color .18s;flex-shrink:0}
+.m-x:hover{color:var(--txt)}
+.tabs{display:flex;gap:4px;margin-bottom:14px;border-bottom:1px solid var(--cbr)}
+.tab{padding:7px 14px;font-size:10.5px;cursor:pointer;color:var(--txm);border-bottom:2px solid transparent;transition:all .18s;margin-bottom:-1px}
+.tab:hover{color:var(--txt)}
+.tab.act{color:var(--gold);border-bottom-color:var(--gold);font-weight:500}
+.tab-c{display:none}.tab-c.act{display:block}
+.fg{margin-bottom:11px}
+.fl{font-size:9.5px;color:var(--txm);margin-bottom:4px;display:block}
+.fi{width:100%;background:rgba(255,255,255,.038);border:1px solid var(--cbr);border-radius:6px;padding:6px 10px;color:var(--txt);font-family:'DM Sans',sans-serif;font-size:11px;transition:border-color .18s}
+.fi:focus{outline:none;border-color:rgba(240,180,41,.4)}
+textarea.fi{resize:vertical;min-height:56px}
+.mt{width:100%;border-collapse:collapse;font-size:9.5px}
+.mt th{background:rgba(255,255,255,.048);padding:5px 3px;text-align:center;color:var(--txm);font-weight:500;font-size:8.5px;border:1px solid rgba(255,255,255,.055)}
+.mt td{padding:2px 2px;border:1px solid rgba(255,255,255,.038)}
+.mt .rl{color:var(--txm);font-size:9px;padding:4px 8px;text-align:right;background:rgba(255,255,255,.02);white-space:nowrap}
+.mt input{width:100%;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.055);border-radius:3px;padding:4px 3px;color:var(--txt);font-size:9px;text-align:center;font-family:'DM Sans',sans-serif}
+.mt input:focus{outline:none;border-color:rgba(240,180,41,.4);background:rgba(240,180,41,.05)}
+.btn-p{padding:8px 18px;background:linear-gradient(135deg,var(--gold),#e09e20);border:none;border-radius:7px;color:#000;font-weight:600;font-size:11.5px;cursor:pointer;transition:all .18s}
+.btn-p:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(240,180,41,.3)}
+.btn-s{padding:8px 14px;background:transparent;border:1px solid var(--cbr);border-radius:7px;color:var(--txm);font-size:11.5px;cursor:pointer;transition:all .18s}
+.btn-s:hover{border-color:rgba(255,255,255,.18);color:var(--txt)}
+.info-row{display:flex;gap:10px;margin-bottom:11px;flex-wrap:wrap}
+.ii{background:rgba(255,255,255,.03);border:1px solid var(--cbr);border-radius:6px;padding:6px 11px;min-width:130px}
+.ii-l{font-size:8.5px;color:var(--txm);margin-bottom:2px;text-transform:uppercase;letter-spacing:.3px}
+.ii-v{font-size:12px;font-weight:600;color:var(--txt)}
+.exc-n{font-size:9px;color:var(--txd);font-style:italic;margin-top:5px}
+/* VALIDATION */
+.val-row{display:flex;align-items:center;gap:7px;margin-top:7px;padding-top:7px;border-top:1px solid rgba(255,255,255,.055);flex-wrap:wrap}
+.vbdg{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:4px;font-size:8.5px;font-weight:600;white-space:nowrap}
+.vbdg.ok{background:rgba(34,197,94,.12);color:#22c55e;border:1px solid rgba(34,197,94,.22)}
+.vbdg.pend{background:rgba(245,158,11,.11);color:#f59e0b;border:1px solid rgba(245,158,11,.22)}
+.vbdg.none{background:rgba(255,255,255,.03);color:var(--txd);border:1px solid rgba(255,255,255,.07)}
+.val-info{font-size:8px;color:var(--txd);flex:1}
+.val-btn{padding:3px 9px;background:rgba(59,130,246,.11);border:1px solid rgba(59,130,246,.28);color:#93c5fd;border-radius:4px;font-size:8.5px;cursor:pointer;transition:all .18s;white-space:nowrap;font-family:'DM Sans',sans-serif}
+.val-btn:hover{background:#3b82f6;color:#fff}
+.val-btn.unval{background:rgba(239,68,68,.11);border-color:rgba(239,68,68,.25);color:#ef4444}
+.val-btn.unval:hover{background:#ef4444;color:#fff}
+.val-sum{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px;padding:10px 14px;background:rgba(59,130,246,.06);border:1px solid rgba(59,130,246,.15);border-radius:8px}
+.val-sum-item{display:flex;flex-direction:column;align-items:center;gap:2px;min-width:80px}
+.val-sum-n{font-family:'Cinzel',serif;font-size:18px;font-weight:700}
+.val-sum-l{font-size:8.5px;color:var(--txm);text-align:center;line-height:1.3}
+.kadin-banner{padding:8px 14px;background:linear-gradient(135deg,rgba(240,180,41,.1),rgba(59,130,246,.06));border:1px solid rgba(240,180,41,.22);border-radius:7px;font-size:10px;color:var(--gold);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+/* ALERT */
+.val-alert-wrap{background:rgba(245,158,11,.07);border:1px solid rgba(245,158,11,.28);border-radius:12px;overflow:hidden;margin-bottom:18px}
+.val-alert-hdr{display:flex;align-items:center;gap:12px;padding:13px 18px;border-bottom:1px solid rgba(245,158,11,.18);background:rgba(245,158,11,.05)}
+.val-alert-body{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(255,255,255,.05)}
+.val-panel{background:rgba(3,12,26,.85);padding:14px 16px}
+.val-panel-title{display:flex;align-items:center;gap:7px;font-family:'Cinzel',serif;font-size:10.5px;font-weight:600;color:var(--txm);letter-spacing:.4px;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,.06)}
+.val-prog-row{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.05)}
+.val-prog-row:last-child{border-bottom:none}
+.tw-ind-row{display:flex;align-items:center;gap:8px;padding:10px 12px;border:1px solid rgba(255,255,255,.055);border-radius:7px;margin-bottom:7px;background:rgba(255,255,255,.018);transition:all .2s}
+.ib{margin-bottom:8px;padding:7px 10px;background:rgba(255,255,255,.023);border-radius:6px;border-left:2px solid}
+.ib-t{font-size:8.5px;letter-spacing:.4px;margin-bottom:5px;font-weight:600}
+.agg-bar{display:flex;align-items:center;gap:8px;padding:7px 12px;background:rgba(240,180,41,.05);border-radius:6px;margin-top:5px;border:1px solid rgba(240,180,41,.12)}
+.agg-bar-lbl{flex:1;font-size:9.5px;color:var(--txm)}
+.agg-bar-val{font-family:'Cinzel',serif;font-size:12px;font-weight:600;color:var(--gold)}
+.mb18{margin-bottom:18px}.mb12{margin-bottom:12px}
+.flex{display:flex;align-items:center;gap:9px}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:rgba(255,255,255,.1);border-radius:10px}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.fu{animation:fadeUp .33s ease forwards}.fu2{animation:fadeUp .33s .07s ease both}.fu3{animation:fadeUp .33s .14s ease both}.fu4{animation:fadeUp .33s .21s ease both}
+</style>
+</head>
+<body>
+
+<div id="login-wrap">
+  <div class="login-box">
+    <div class="login-logo">
+      <div style="font-size:32px;margin-bottom:8px">&#127973;</div>
+      <div class="login-logo-t">DINAS KESEHATAN</div>
+      <div class="login-logo-t" style="color:rgba(240,180,41,.6);font-size:15px">Kabupaten Lima Puluh Kota</div>
+      <div class="login-logo-s">Sistem Cascading Kinerja &amp; Anggaran</div>
+      <div class="login-logo-ss">Tahun Anggaran 2026</div>
+    </div>
+    <div class="login-fg">
+      <label class="login-fl">Nama Pengguna</label>
+      <input class="login-fi" type="text" id="lu" placeholder="Masukkan nama pengguna..." autocomplete="username"/>
+    </div>
+    <div class="login-fg">
+      <label class="login-fl">Password</label>
+      <input class="login-fi" type="password" id="lp" placeholder="Masukkan password..." autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()"/>
+    </div>
+    <button class="login-btn" onclick="doLogin()">MASUK KE DASHBOARD</button>
+    <div class="login-err" id="lerr">Nama pengguna atau password salah. Silakan coba lagi.</div>
+
+
+  </div>
+</div>
+
+<div id="app-wrap" style="display:none">
+<aside class="sb">
+  <div class="sb-logo">
+    <div class="sb-logo-t">DINAS KESEHATAN</div>
+    <div class="sb-logo-t" style="color:var(--txm)">KAB. LIMA PULUH KOTA</div>
+    <div class="sb-logo-s">Cascading Kinerja &amp; Anggaran 2026</div>
+    <div class="sb-bdg">&#9889; TAHUN ANGGARAN 2026</div>
+  </div>
+  <div class="sb-user">
+    <div class="sb-user-nm" id="sb-unm">-</div>
+    <div class="sb-user-jb" id="sb-ujb">-</div>
+  </div>
+  <nav class="sb-nav">
+    <div class="nav-s">Dashboard</div>
+    <div class="ni act" data-v="exec" onclick="sw('exec')"><span class="ni-ico">&#127963;</span><span>Eksekutif</span></div>
+    <div class="nav-s">Perencanaan Kinerja</div>
+    <div class="ni" data-v="cascade" onclick="sw('cascade')"><span class="ni-ico">&#127919;</span><span>Cascading KPI</span></div>
+    <div class="ni" data-v="program" onclick="sw('program')"><span class="ni-ico">&#128203;</span><span>Program &amp; Anggaran</span></div>
+    <div class="nav-s">Input Data</div>
+    <div class="ni" data-v="inputsel" onclick="sw('inputsel')"><span class="ni-ico">&#9999;&#65039;</span><span>Input Realisasi Sub Keg.</span></div>
+    <div class="ni" data-v="inputkpi" onclick="sw('inputkpi')"><span class="ni-ico">&#128202;</span><span>Input Capaian Triwulan</span></div>
+  </nav>
+  <div class="sb-ft"><span>CascadeKPI v4.0 &copy; 2026</span><button class="logout-btn" onclick="doLogout()">&#9099; Keluar</button></div>
+</aside>
+<main class="main">
+  <header class="hdr">
+    <div><div class="hdr-t" id="hdr-t">Dashboard Eksekutif</div><div class="hdr-s" id="hdr-s">Monitoring Kinerja &amp; Realisasi Anggaran Terpadu</div></div>
+    <div class="hdr-r"><div class="hdr-d" id="hdr-d"></div><div class="sdot"></div></div>
+  </header>
+  <div class="mc">
+    <div id="view-exec" class="view act"></div>
+    <div id="view-cascade" class="view"></div>
+    <div id="view-program" class="view"></div>
+    <div id="view-inputsel" class="view"></div>
+    <div id="view-inputkpi" class="view"></div>
+  </div>
+</main>
+</div>
+
+<div class="mover" id="mover">
+  <div class="modal">
+    <div class="m-hdr">
+      <div><div class="m-t" id="m-t">Input Sub Kegiatan</div><div class="m-s" id="m-s"></div></div>
+      <span class="m-x" onclick="closeModal()">&#10005;</span>
+    </div>
+    <div id="m-body"></div>
+  </div>
+</div>
+<div class="mover" id="mover-tw">
+  <div class="modal" style="max-width:600px">
+    <div class="m-hdr">
+      <div><div class="m-t" id="mtw-t">
+      </div>
+      <span class="m-x" onclick="closeTWModal()">&#10005;</span>
+    </div>
+    <div id="mtw-body"></div>
+  </div>
+</div>
+<script>
+
+
+// ================================================================
+// USERS
+// ================================================================
+var USERS = [
+ {nama:'Budi Andri',jabatan:'Kepala Dinas Kesehatan',pass:'Budi123'},
+ {nama:'Deni Hendra Suryadi',jabatan:'Sekretaris',pass:'Deni123'},
+ {nama:'Erdison',jabatan:'Kepala Bidang P2P',pass:'Erdison123'},
+ {nama:'Elsi Risalma Putri',jabatan:'Kepala Bidang Yankes',pass:'Elsi123'},
+ {nama:'Erdison',jabatan:'Kepala Bidang Kesmas',pass:'Erdison123'},
+ {nama:'Irwan Faisal',jabatan:'Kepala Bidang SDK',pass:'Irwan123'}
+];
+
+function doLogin(){
+ var u=document.getElementById('lu').value.trim();
+ var p=document.getElementById('lp').value;
+ var found=null;
+ for(var i=0;i<USERS.length;i++){
+  if(USERS[i].nama.toLowerCase()===u.toLowerCase()&&USERS[i].pass===p){found=USERS[i];break;}
+ }
+ if(!found){document.getElementById('lerr').style.display='block';return;}
+ document.getElementById('lerr').style.display='none';
+ sessionStorage.setItem('cur_user',JSON.stringify({nama:found.nama,jabatan:found.jabatan}));
+ showApp(found);
+}
+
+function showApp(u){
+ document.getElementById('login-wrap').style.display='none';
+ document.getElementById('app-wrap').style.display='block';
+ document.getElementById('sb-unm').textContent=u.nama;
+ document.getElementById('sb-ujb').textContent=u.jabatan;
+ initData();updDate();renderExec();
+}
+
+function doLogout(){
+ sessionStorage.removeItem('cur_user');
+ document.getElementById('app-wrap').style.display='none';
+ document.getElementById('login-wrap').style.display='flex';
+ document.getElementById('lu').value='';
+ document.getElementById('lp').value='';
+}
+
+function fillLogin(nama,pass){
+ var lu=document.getElementById('lu');
+ var lp=document.getElementById('lp');
+ if(lu) lu.value=nama;
+ if(lp) lp.value=pass;
+ /* Small flash effect on input fields */
+ [lu,lp].forEach(function(el){
+  if(!el) return;
+  el.style.borderColor='rgba(240,180,41,.6)';
+  el.style.background='rgba(240,180,41,.07)';
+  setTimeout(function(){el.style.borderColor='';el.style.background='';},600);
+ });
+}
+function toggleHint(){/* legacy — no-op */}
+
+// ================================================================
+// MASTER DATA
+// ================================================================
+var MD = {
+ tujuan:{nama:"Meningkatkan Derajat Kesehatan Masyarakat",target:"73,79",satuan:"Tahun",capaian:"72,1",ind:[{nm:"Usia Harapan Hidup",tgt:"73,79 Tahun"}]},
+ sasaranII:[
+  {id:"s2-1",nama:"Tercapainya masyarakat yang sehat dan produktif sesuai siklus hidup",indikator:[
+   {nm:"Usia Harapan Hidup",tgt:"73,79 tahun",st:"ylw"},
+   {nm:"Jumlah Kematian Ibu",tgt:"0 orang",st:"red"},
+   {nm:"Jumlah Kematian Balita",tgt:"< 72 anak",st:"ylw"},
+   {nm:"Prevalensi Stunting",tgt:"< 22,6%",st:"ylw"},
+   {nm:"Cakupan penerima pemeriksaan kesehatan gratis",tgt:"100%",st:"red"},
+   {nm:"Cakupan Imunisasi Bayi Lengkap",tgt:"95%",st:"ylw"},
+   {nm:"Cakupan Kepesertaan JKN",tgt:"100%",st:"grn"},
+   {nm:"Cakupan Kepesertaan Aktif JKN",tgt:"90%",st:"ylw"},
+   {nm:"Angka keberhasilan pengobatan TB (TSR)",tgt:"90%",st:"ylw"},
+   {nm:"Penderita hipertensi mendapat pelayanan sesuai standar",tgt:"100%",st:"grn"},
+   {nm:"Proporsi penduduk dengan aktivitas fisik cukup",tgt:"70%",st:"ylw"},
+  ]},
+  {id:"s2-2",nama:"Meningkatnya pembudayaan gaya hidup sehat melalui penguatan kesadaran, pengetahuan, dan penerapan hidup sehat",indikator:[
+   {nm:"Proporsi penduduk dengan aktivitas fisik cukup",tgt:"70%",st:"ylw"},
+  ]},
+  {id:"s2-3",nama:"Meningkatnya Akuntabilitas Kinerja Instansi Pemerintah pada Dinas Kesehatan",indikator:[
+   {nm:"Nilai SAKIP Dinas Kesehatan",tgt:"75 (BB)",st:"ylw"},
+  ]},
+ ],
+ sasaranIII:[
+  {id:"s3-1",nama:"Meningkatnya kualitas kesehatan perorangan dan masyarakat",indikator:[
+   {nm:"Prevalensi Depresi usia \u226515 tahun",tgt:"< 1,4%",st:"ylw"},
+   {nm:"% Desa/Kel. STBM",tgt:"25%",st:"ylw"},
+   {nm:"Prevalensi Obesitas > 18 tahun",tgt:"< 23,4%",st:"ylw"},
+   {nm:"% Fasyankes sesuai standar",tgt:"65%",st:"ylw"},
+   {nm:"Tingkat kepuasan pasien",tgt:"85%",st:"ylw"},
+   {nm:"% TPM memenuhi syarat",tgt:"55%",st:"ylw"},
+   {nm:"% Faskes terintegrasi SIKN",tgt:"100%",st:"grn"},
+   {nm:"% Faskes perbekalan sesuai standar",tgt:"65%",st:"ylw"},
+   {nm:"% Fasyankes akreditasi paripurna",tgt:"70%",st:"ylw"},
+   {nm:"% Lanjut usia yang mandiri",tgt:"93%",st:"ylw"},
+   {nm:"% Merokok penduduk 10-21 tahun",tgt:"< 11,4%",st:"ylw"},
+  ]},
+  {id:"s3-2",nama:"Meningkatnya mutu dan distribusi tenaga kesehatan",indikator:[
+   {nm:"% Puskesmas dengan SDMK sesuai standar",tgt:"100%",st:"grn"},
+  ]},
+  {id:"s3-3",nama:"Meningkatnya kualitas dan distribusi sediaan farmasi, alat kesehatan dan makanan minuman",indikator:[
+   {nm:"% Penerbitan dan pemenuhan komitmen SPP-IRT",tgt:"70%",st:"ylw"},
+   {nm:"% Pangan IRT aman dan bermutu",tgt:"70%",st:"ylw"},
+   {nm:"% Sarana IRTP memenuhi ketentuan",tgt:"60%",st:"ylw"},
+   {nm:"% Apotek dan toko obat memelihara persyaratan",tgt:"100%",st:"grn"},
+   {nm:"% Rekomendasi pengawasan farmasi ditindaklanjuti",tgt:"90%",st:"ylw"},
+  ]},
+  {id:"s3-4",nama:"Meningkatnya kualitas pemberdayaan masyarakat bidang kesehatan",indikator:[
+   {nm:"% Puskesmas & Pustu penyelenggarakan program aktivitas fisik",tgt:"100%",st:"grn"},
+  ]},
+ ],
+ sasaranIV:[
+  {id:"s4-1",nama:"Meningkatnya Kualitas Pelayanan Umum dan Kepegawaian",indikator:[
+   {nm:"% ASN Dinas Kesehatan Berkinerja Baik",tgt:"95%",st:"ylw"},
+   {nm:"% BMD Dinas Kesehatan dalam keadaan baik",tgt:"90%",st:"ylw"},
+   {nm:"Indeks Kepuasan Internal Layanan Perkantoran",tgt:"95%",st:"ylw"},
+  ]},
+  {id:"s4-2",nama:"Meningkatnya pengelolaan Keuangan Dinas Kesehatan",indikator:[
+   {nm:"% Pelaporan Keuangan tepat waktu",tgt:"100%",st:"grn"},
+  ]},
+ ],
+ program:[
+  {id:"pg1",nm:"Program Pemenuhan Upaya Kesehatan Perorangan dan Upaya Kesehatan Masyarakat",
+   outcome:"Meningkatnya kualitas pelayanan kesehatan perorangan dan masyarakat di Kab. Lima Puluh Kota",
+   ind:[{nm:"Prevalensi Depresi usia \u226515 tahun",tgt:"< 1,4%"},{nm:"% Desa/Kel. STBM",tgt:"25%"},{nm:"Prevalensi Obesitas > 18 tahun",tgt:"< 23,4%"},{nm:"% Fasyankes sesuai standar",tgt:"65%"},{nm:"Tingkat kepuasan pasien",tgt:"85%"},{nm:"% TPM memenuhi syarat",tgt:"55%"},{nm:"% Faskes terintegrasi SIKN",tgt:"100%"},{nm:"% Fasyankes akreditasi paripurna",tgt:"70%"},{nm:"% Faskes perbekalan sesuai standar",tgt:"65%"},{nm:"% Lansia mandiri",tgt:"93%"},{nm:"% Merokok penduduk 10-21 thn",tgt:"< 11,4%"}],
+   kegiatan:[
+    {id:"kg1-A",nm:"A. Penyediaan Fasilitas Pelayanan Kesehatan untuk UKM dan UKP Kewenangan Daerah Kabupaten/Kota",
+     ind:[{nm:"% RS Pem. Daerah dan Puskesmas memenuhi ketersediaan SPA sesuai standar",tgt:"65%"},{nm:"Terpenuhinya obat, BMHP dan vaksin program tepat waktu dan tepat jumlah",tgt:"100%"}],
+     sk:[{id:"sk1A01",nm:"1. Pembangunan Rumah Sakit beserta Sarana dan Prasarana Pendukungnya"},{id:"sk1A02",nm:"2. Rehabilitasi dan Pemeliharaan Rumah Sakit"},{id:"sk1A03",nm:"3. Pengembangan Puskesmas"},{id:"sk1A04",nm:"4. Pengembangan Fasilitas Kesehatan Lainnya"},{id:"sk1A05",nm:"5. Rehabilitasi dan Pemeliharaan Puskesmas"},{id:"sk1A06",nm:"6. Rehabilitasi dan Pemeliharaan Fasilitas Kesehatan Lainnya"},{id:"sk1A07",nm:"7. Pengadaan Alat Kesehatan/Alat Penunjang Medik Fasilitas Pelayanan Kesehatan"},{id:"sk1A08",nm:"8. Pemeliharaan Rutin dan Berkala Alat Kesehatan/Alat Penunjang Medik Fasilitas"},{id:"sk1A09",nm:"9. Pengembangan Rumah Sakit"},{id:"sk1A10",nm:"10. Pengadaan Obat, Bahan Habis Pakai, BMHP, Vaksin, Makanan dan Minuman di Fasilitas Kesehatan"},{id:"sk1A11",nm:"11. Pengelolaan Pelayanan Kesehatan Dasar Melalui Pendekatan Keluarga"},{id:"sk1A12",nm:"12. Distribusi Alat Kesehatan, Obat, BMHP, Vaksin, Makanan dan Minuman ke Fasilitas Kesehatan"}]},
+    {id:"kg1-B",nm:"B. Penyediaan Layanan Kesehatan untuk UKM dan UKP Kewenangan Daerah Kabupaten/Kota",
+     ind:[{nm:"% RS Pem. Daerah dan Puskesmas memenuhi ketersediaan SPA sesuai standar",tgt:"65%"},{nm:"Jumlah layanan kesehatan untuk UKM dan UKP Tingkat Daerah",tgt:"40 jenis"}],
+     sk:[{id:"sk1B01",nm:"1. Pengelolaan Pelayanan Kesehatan Ibu Hamil"},{id:"sk1B02",nm:"2. Pengelolaan Pelayanan Kesehatan Ibu Bersalin"},{id:"sk1B03",nm:"3. Pengelolaan Pelayanan Kesehatan Bayi Baru Lahir"},{id:"sk1B04",nm:"4. Pengelolaan Pelayanan Kesehatan Balita"},{id:"sk1B05",nm:"5. Pengelolaan Pelayanan Kesehatan pada Usia Pendidikan Dasar"},{id:"sk1B06",nm:"6. Pengelolaan Pelayanan Kesehatan pada Usia Produktif"},{id:"sk1B07",nm:"7. Pengelolaan Pelayanan Kesehatan pada Usia Lanjut"},{id:"sk1B08",nm:"8. Pengelolaan Pelayanan Kesehatan Penderita Hipertensi sesuai standar"},{id:"sk1B09",nm:"9. Pengelolaan Pelayanan Kesehatan Penderita Diabetes Melitus sesuai standar"},{id:"sk1B10",nm:"10. Pengelolaan Pelayanan Kesehatan Orang dengan Gangguan Jiwa Berat"},{id:"sk1B11",nm:"11. Pengelolaan Pelayanan Kesehatan Orang Terduga Tuberkulosis"},{id:"sk1B12",nm:"12. Pengelolaan Pelayanan Kesehatan Orang dengan Risiko Terinfeksi HIV"},{id:"sk1B13",nm:"13. Pengelolaan Pelayanan Kesehatan Orang dengan Risiko Terinfeksi HIV (Lanjutan)"},{id:"sk1B14",nm:"14. Pengelolaan Pelayanan Kesehatan Gizi Masyarakat"},{id:"sk1B15",nm:"15. Pengelolaan Pelayanan Kesehatan Kerja dan Olahraga"},{id:"sk1B16",nm:"16. Pengelolaan Pelayanan Kesehatan Lingkungan"},{id:"sk1B17",nm:"17. Pengelolaan Pelayanan Promosi Kesehatan"},{id:"sk1B18",nm:"18. Pengelolaan Pelayanan Kesehatan Tradisional, Akupuntur, Asuhan Mandiri, dan Tradisional Lainnya"},{id:"sk1B19",nm:"19. Pengelolaan Surveilans Kesehatan"},{id:"sk1B20",nm:"20. Pengelolaan Pelayanan Kesehatan Orang dengan Masalah Kesehatan Jiwa (ODMK)"},{id:"sk1B21",nm:"21. Pengelolaan Pelayanan Kesehatan Jiwa dan NAPZA"},{id:"sk1B22",nm:"22. Pelayanan Kesehatan Penyakit Menular dan Tidak Menular"},{id:"sk1B23",nm:"23. Pengelolaan Jaminan Kesehatan Masyarakat"},{id:"sk1B24",nm:"24. Deteksi Dini Penyalahgunaan NAPZA di Fasyankes dan Sekolah"},{id:"sk1B25",nm:"25. Pengambilan dan Pengiriman Spesimen Penyakit Potensial KLB ke Laboratorium Rujukan/Nasional"},{id:"sk1B26",nm:"26. Penyelenggaraan Kabupaten/Kota Sehat"},{id:"sk1B27",nm:"27. Operasional Pelayanan Rumah Sakit"},{id:"sk1B28",nm:"28. Operasional Pelayanan Puskesmas"},{id:"sk1B29",nm:"29. Operasional Pelayanan Fasilitas Kesehatan Lainnya"},{id:"sk1B30",nm:"30. Pelaksanaan Akreditasi Fasilitas Kesehatan di Kabupaten/Kota"},{id:"sk1B31",nm:"31. Investigasi Awal Kejadian Tidak Diharapkan (KIPI dan Pemberian Obat Massal)"},{id:"sk1B32",nm:"32. Pelaksanaan Kewaspadaan Dini dan Respon Wabah"},{id:"sk1B33",nm:"33. Penyediaan dan Pengelolaan Sistem Penanganan Gawat Darurat Terpadu (SPGDT)"},{id:"sk1B34",nm:"34. Pengelolaan Pelayanan Kesehatan Orang dengan Tuberkulosis"},{id:"sk1B35",nm:"35. Pengelolaan Pelayanan Kesehatan Malaria"},{id:"sk1B36",nm:"36. Koordinasi dan Sinkronisasi Penerapan SPM Bidang Kesehatan Kabupaten/Kota"},{id:"sk1B37",nm:"37. Pengelolaan Upaya Kesehatan Ibu dan Anak"},{id:"sk1B38",nm:"38. Pengelolaan Pelayanan Kelanjutusiaan"},{id:"sk1B39",nm:"39. Pengelolaan Layanan Imunisasi"},{id:"sk1B40",nm:"40. Pengelolaan Pelayanan Kesehatan Haji"}]},
+    {id:"kg1-C",nm:"C. Penyelenggaraan Sistem Informasi Kesehatan Secara Terintegrasi",
+     ind:[{nm:"% Puskesmas terdaftar di SIKN",tgt:"100%"}],
+     sk:[{id:"sk1C01",nm:"1. Pengelolaan Sistem Informasi Kesehatan"}]},
+    {id:"kg1-D",nm:"D. Penerbitan Izin Rumah Sakit Kelas C, D dan Fasilitas Pelayanan Kesehatan Tingkat Daerah Kabupaten/Kota",
+     ind:[{nm:"Jumlah izin operasional RS dan Puskesmas terdaftar di Kementerian",tgt:"100%"}],
+     sk:[{id:"sk1D01",nm:"1. Peningkatan Mutu Pelayanan Fasilitas Kesehatan"}]}
+   ]},
+  {id:"pg2",nm:"Program Peningkatan Kapasitas Sumber Daya Manusia Kesehatan",
+   outcome:"Meningkatnya kompetensi, mutu dan distribusi SDM Kesehatan di Kab. Lima Puluh Kota",
+   ind:[{nm:"Rasio tenaga kesehatan dan tenaga medis terhadap populasi",tgt:"Sesuai Standar"},{nm:"% Puskesmas dengan SDMK sesuai standar",tgt:"100%"},{nm:"% RS pemerintah dengan dokter spesialis sesuai standar",tgt:"85%"}],
+   kegiatan:[
+    {id:"kg2-A",nm:"A. Pemberian Izin Praktik Tenaga Kesehatan di Wilayah Kabupaten/Kota",
+     ind:[{nm:"% Puskesmas terpenuhi jenis tenaga medis dan kesehatan sesuai standar",tgt:"100%"}],
+     sk:[{id:"sk2A01",nm:"1. Pengendalian Perizinan Praktik Tenaga Kesehatan"},{id:"sk2A02",nm:"2. Pembinaan dan Pengawasan Tenaga Kesehatan serta Tindak Lanjut Perizinan Praktik Tenaga Kesehatan"}]},
+    {id:"kg2-B",nm:"B. Perencanaan Kebutuhan dan Pendayagunaan Sumber Daya Manusia Kesehatan untuk UKP dan UKM di Wilayah Kabupaten/Kota",
+     ind:[{nm:"% Perencanaan Kebutuhan Tenaga Medis dan Kesehatan di tingkat Kab/Kota",tgt:"100%"}],
+     sk:[{id:"sk2B01",nm:"1. Perencanaan dan Distribusi serta Pemerataan Sumber Daya Manusia Kesehatan"},{id:"sk2B02",nm:"2. Pemenuhan Kebutuhan Sumber Daya Manusia Kesehatan Sesuai Standar"},{id:"sk2B03",nm:"3. Pembinaan dan Pengawasan Sumber Daya Manusia Kesehatan"}]},
+    {id:"kg2-C",nm:"C. Pengembangan Mutu dan Peningkatan Kompetensi Teknis Sumber Daya Manusia Kesehatan Tingkat Daerah Kabupaten/Kota",
+     ind:[{nm:"% SDM kesehatan mendapatkan pelatihan bidang kesehatan",tgt:"90%"}],
+     sk:[{id:"sk2C01",nm:"1. Pengembangan Mutu dan Peningkatan Kompetensi Teknis SDM Kesehatan Tingkat Daerah Kabupaten/Kota"}]}
+   ]},
+  {id:"pg3",nm:"Program Sediaan Farmasi, Alat Kesehatan dan Makanan Minuman",
+   outcome:"Meningkatnya keamanan, mutu dan ketersediaan sediaan farmasi, alat kesehatan serta makanan minuman",
+   ind:[{nm:"% Penerbitan dan pemenuhan komitmen SPP-IRT",tgt:"70%"},{nm:"% Pangan IRT aman dan bermutu",tgt:"70%"},{nm:"% Apotek dan toko obat memelihara persyaratan perizinan",tgt:"100%"},{nm:"% Rekomendasi pengawasan farmasi dan pangan olahan ditindaklanjuti",tgt:"90%"}],
+   kegiatan:[
+    {id:"kg3-A",nm:"A. Pemberian Izin Apotek, Toko Obat, Toko Alat Kesehatan dan Optikal, Usaha Mikro Obat Tradisional (UMOT)",
+     ind:[{nm:"Jumlah pemenuhan standar perizinan apotek dan toko obat",tgt:"100%"}],
+     sk:[{id:"sk3A01",nm:"1. Pengendalian dan Pengawasan serta Tindak Lanjut Pengawasan Perizinan Apotek, Toko Obat, Toko Alat Kesehatan, Optikal, dan UMOT"}]},
+    {id:"kg3-B",nm:"B. Penerbitan Sertifikat Produksi Pangan Industri Rumah Tangga dan Nomor P-IRT",
+     ind:[{nm:"Jumlah Pemeriksaan cara produksi pangan olahan dan Penyuluhan Keamanan Pangan serta pemenuhan label IRT terstandar",tgt:"64%"}],
+     sk:[{id:"sk3B01",nm:"1. Pengendalian dan Pengawasan serta Tindak Lanjut Pengawasan Sertifikat Produksi Pangan Industri Rumah Tangga dan Nomor P-IRT"}]},
+    {id:"kg3-C",nm:"C. Penerbitan Sertifikat Laik Higiene Sanitasi Tempat Pengelolaan Makanan (TPM)",
+     ind:[{nm:"Jumlah Dokumen Hasil Pengendalian Pengawasan Penerbitan Sertifikat Laik Higiene Sanitasi TPM",tgt:"55%"}],
+     sk:[{id:"sk3C01",nm:"1. Pengendalian dan Pengawasan serta Tindak Lanjut Pengawasan Penerbitan Sertifikat Laik Higiene Sanitasi TPM (Jasa Boga, Rumah Makan/Restoran, Depot Air Minum)"}]},
+    {id:"kg3-D",nm:"D. Pemeriksaan dan Tindak Lanjut Hasil Pemeriksaan Post Market pada Produk Makanan Minuman Industri Rumah Tangga",
+     ind:[{nm:"Jumlah Produk dan Sarana Produksi Makanan-Minuman IRT Beredar yang Dilakukan Pemeriksaan Post Market",tgt:"88%"}],
+     sk:[{id:"sk3D01",nm:"1. Pemeriksaan Post Market pada Produk Makanan Minuman IRT yang Beredar dan Pengawasan serta Tindak Lanjut Pengawasan"}]}
+   ]},
+  {id:"pg4",nm:"Program Pemberdayaan Masyarakat Bidang Kesehatan",
+   outcome:"Meningkatnya peran serta masyarakat dalam bidang kesehatan dan penerapan gaya hidup sehat",
+   ind:[{nm:"% Puskesmas dan Pustu menyelenggarakan program aktivitas fisik",tgt:"100%"}],
+   kegiatan:[
+    {id:"kg4-A",nm:"A. Advokasi, Pemberdayaan, Kemitraan, Peningkatan Peran serta Masyarakat dan Lintas Sektor Tingkat Daerah Kabupaten/Kota",
+     ind:[{nm:"% Peningkatan layanan promosi kesehatan, advokasi, kemitraan dan pemberdayaan masyarakat",tgt:"100%"}],
+     sk:[{id:"sk4A01",nm:"1. Peningkatan Upaya Promosi Kesehatan, Advokasi, Kemitraan dan Pemberdayaan Masyarakat"}]},
+    {id:"kg4-B",nm:"B. Pelaksanaan Sehat dalam rangka Promotif Preventif Tingkat Daerah Kabupaten/Kota",
+     ind:[{nm:"Jumlah Dokumen Hasil Penyelenggaraan Promosi Kesehatan dan Gerakan Hidup Bersih dan Sehat",tgt:"12 Dok"}],
+     sk:[{id:"sk4B01",nm:"1. Penyelenggaraan Promosi Kesehatan dan Gerakan Hidup Bersih dan Sehat"},{id:"sk4B02",nm:"2. Penumbuhan Kesadaran Keluarga dalam Peningkatan Derajat Kesehatan Keluarga dan Lingkungan dengan PHBS"}]},
+    {id:"kg4-C",nm:"C. Pengembangan dan Pelaksanaan Upaya Kesehatan Bersumber Daya Masyarakat (UKBM) Tingkat Daerah Kabupaten/Kota",
+     ind:[{nm:"% Bimbingan teknis dan supervisi pengembangan dan pelaksanaan UKBM",tgt:"100%"}],
+     sk:[{id:"sk4C01",nm:"1. Bimbingan Teknis dan Supervisi Pengembangan dan Pelaksanaan Upaya Kesehatan Bersumber Daya Masyarakat (UKBM)"}]}
+   ]},
+  {id:"pg5",nm:"Program Penunjang Urusan Pemerintahan Daerah Kabupaten/Kota",
+   outcome:"Meningkatnya kualitas tata kelola administrasi dan manajemen Dinas Kesehatan",
+   ind:[{nm:"% Pemenuhan kebutuhan operasional kantor dan ASN",tgt:"100%"}],
+   kegiatan:[
+    {id:"kg5-A",nm:"A. Perencanaan, Penganggaran, dan Evaluasi Kinerja Perangkat Daerah",
+     ind:[{nm:"% Sinkronisasi Perencanaan dan Pelaksanaan Kinerja Perangkat Daerah",tgt:"100%"}],
+     sk:[{id:"sk5A01",nm:"1. Penyusunan Dokumen Perencanaan Perangkat Daerah"}]},
+    {id:"kg5-B",nm:"B. Administrasi Keuangan Perangkat Daerah",
+     ind:[{nm:"% Tertib Administrasi Keuangan",tgt:"100%"}],
+     sk:[{id:"sk5B01",nm:"1. Penyediaan Gaji dan Tunjangan ASN"},{id:"sk5B02",nm:"2. Pelaksanaan Penatausahaan dan Pengujian/Verifikasi Keuangan SKPD"},{id:"sk5B03",nm:"3. Koordinasi dan Penyusunan Laporan Keuangan Akhir Tahun SKPD"}]},
+    {id:"kg5-C",nm:"C. Administrasi Barang Milik Daerah pada Perangkat Daerah",
+     ind:[{nm:"% Tertib Administrasi Barang Milik Daerah Perangkat Daerah",tgt:"100%"}],
+     sk:[{id:"sk5C01",nm:"1. Penatausahaan Barang Milik Daerah pada SKPD"}]},
+    {id:"kg5-D",nm:"D. Administrasi Kepegawaian Perangkat Daerah",
+     ind:[{nm:"% Tertib Administrasi Kepegawaian Perangkat Daerah",tgt:"100%"}],
+     sk:[{id:"sk5D01",nm:"1. Pendataan dan Pengolahan Administrasi Kepegawaian"}]},
+    {id:"kg5-E",nm:"E. Administrasi Umum Perangkat Daerah",
+     ind:[{nm:"% Tertib Administrasi Umum Perangkat Daerah",tgt:"100%"}],
+     sk:[{id:"sk5E01",nm:"1. Fasilitasi Kunjungan Tamu"},{id:"sk5E02",nm:"2. Penyelenggaraan Rapat Koordinasi dan Konsultasi SKPD"}]},
+    {id:"kg5-F",nm:"F. Penyediaan Jasa Penunjang Urusan Pemerintah Daerah",
+     ind:[{nm:"% Ketersediaan Jasa Penunjang Urusan Pemerintahan Daerah",tgt:"100%"}],
+     sk:[{id:"sk5F01",nm:"1. Penyediaan Jasa Komunikasi, Sumber Daya Air dan Listrik"},{id:"sk5F02",nm:"2. Penyediaan Jasa Pelayanan Umum Kantor"}]},
+    {id:"kg5-G",nm:"G. Pemeliharaan Barang Milik Daerah Penunjang Urusan Pemerintah Daerah",
+     ind:[{nm:"% Barang Milik Daerah yang Berkondisi Baik",tgt:"90%"}],
+     sk:[{id:"sk5G01",nm:"1. Penyediaan Jasa Pemeliharaan, Biaya Pemeliharaan dan Pajak Kendaraan Perorangan Dinas atau Kendaraan Dinas Jabatan"},{id:"sk5G02",nm:"2. Penyediaan Jasa Pemeliharaan, Biaya Pemeliharaan, Pajak, dan Perizinan Kendaraan Dinas Operasional atau Lapangan"}]},
+    {id:"kg5-H",nm:"H. Peningkatan Pelayanan BLUD",
+     ind:[{nm:"Jumlah BLUD yang Menyediakan Pelayanan dan Penunjang Pelayanan",tgt:"1 BLUD"}],
+     sk:[{id:"sk5H01",nm:"1. Pelayanan dan Penunjang Pelayanan BLUD"}]}
+   ]}
+ ]
+};
+
+// ================================================================
+// STORAGE & UTILS
+// ================================================================
+var VER='dk50_v8';
+var MN=['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Ags','Sep','Okt','Nov','Des'];
+var CH={};
+
+// SK Data: {deskripsi, pagu, fisik[12], keuangan[12], kendala, rtl}
+function gSk(id){try{return JSON.parse(localStorage.getItem('s_'+id)||'null')}catch(e){return null}}
+function sSk(id,o){localStorage.setItem('s_'+id,JSON.stringify(o))}
+function lv(a){if(!a)return 0;for(var i=11;i>=0;i--){if(a[i]>0)return a[i];}return 0;}
+function skPagu(id){var d=gSk(id);return d&&d.pagu?parseFloat(d.pagu)||0:0;}
+function kgPagu(k){return k.sk.reduce(function(a,s){return a+skPagu(s.id)},0)}
+function pgPagu(p){return p.kegiatan.reduce(function(a,k){return a+kgPagu(k)},0)}
+function totPagu(){return MD.program.reduce(function(a,p){return a+pgPagu(p)},0)}
+function skF(id){var d=gSk(id);return d?lv(d.fisik):0;}
+function skK(id){var d=gSk(id);return d?lv(d.keuangan):0;}
+function kgF(k){var vs=k.sk.map(function(s){return skF(s.id)});return vs.length?vs.reduce(function(a,b){return a+b},0)/vs.length:0}
+function kgKR(k){return k.sk.reduce(function(a,s){return a+skK(s.id)},0)}
+function kgKP(k){var ta=kgPagu(k);return ta>0?(kgKR(k)/ta)*100:0}
+function pgF(p){var vs=p.kegiatan.map(function(k){return kgF(k)});return vs.reduce(function(a,b){return a+b},0)/vs.length}
+function pgKR(p){return p.kegiatan.reduce(function(a,k){return a+kgKR(k)},0)}
+function pgKP(p){var ta=pgPagu(p);return ta>0?(pgKR(p)/ta)*100:0}
+function totF(){var vs=MD.program.map(function(p){return pgF(p)});return vs.reduce(function(a,b){return a+b},0)/vs.length}
+function totKR(){return MD.program.reduce(function(a,p){return a+pgKR(p)},0)}
+
+// Quarterly TW data
+function gQtw(sasId,indIdx){try{return JSON.parse(localStorage.getItem('qtw_'+sasId+'_'+indIdx)||'["","","",""]')}catch(e){return['','','','']};}
+function sQtw(sasId,indIdx,arr){localStorage.setItem('qtw_'+sasId+'_'+indIdx,JSON.stringify(arr));}
+
+function sc(p){return p>=95?'grn':p>=80?'ylw':'red'}
+function stg(p){var c=sc(p);var lbl={grn:'Sesuai',ylw:'Perlu Perhatian',red:'Di Bawah Target'};return '<span class="tag '+c+'">'+lbl[c]+'</span>'}
+function tld(s){return '<span class="tld '+s+'"></span>'}
+function rp(n){
+ if(!n||n===0)return'Rp 0';
+ if(n>=1e12)return'Rp '+(n/1e12).toFixed(2)+' T';
+ if(n>=1e9)return'Rp '+(n/1e9).toFixed(2)+' M';
+ if(n>=1e6)return'Rp '+(n/1e6).toFixed(1)+' jt';
+ return'Rp '+n.toLocaleString('id-ID');
+}
+function pct(v){return(+v).toFixed(1)+' %'}
+function orDash(v){return v&&v!==''?v:'\u2014'}
+
+function initData(){
+ if(localStorage.getItem(VER))return;
+ /* Wipe ALL previously stored data keys */
+ var keysToDelete=[];
+ for(var ki=0;ki<localStorage.length;ki++){
+  var k=localStorage.key(ki);
+  if(k&&(k.indexOf('s_')==0||k.indexOf('a_')==0||k.indexOf('qtw_')==0||
+     k.indexOf('vsk_')==0||k.indexOf('vtw_')==0||k.indexOf('dk50_')==0)){
+   keysToDelete.push(k);
+  }
+ }
+ keysToDelete.forEach(function(k){localStorage.removeItem(k);});
+ /* Init fresh empty data for all sub kegiatan */
+ MD.program.forEach(function(p){p.kegiatan.forEach(function(k){k.sk.forEach(function(s){
+  sSk(s.id,{deskripsi:'',pagu:0,fisik:Array(12).fill(0),keuangan:Array(12).fill(0),kendala:'',rtl:''});
+ })})});
+ localStorage.setItem(VER,'1');
+}
+
+// ================================================================
+// EXEC VIEW
+// ================================================================
+function renderExec(){
+ var tf=totF(),ta=totPagu(),tkr=totKR(),tkp=ta>0?(tkr/ta)*100:0;
+ var el=document.getElementById('view-exec');
+ var pgRows=MD.program.map(function(p,pi){
+  var pf=pgF(p),pk=pgKP(p),pr=pgKR(p),pa=pgPagu(p);
+  var rows=['<tr style="background:rgba(240,180,41,.04)"><td><span style="font-size:9px;color:var(--gold);font-weight:700;background:var(--gdim);padding:1px 6px;border-radius:3px">P'+(pi+1)+'</span> <strong style="font-size:11px">'+p.nm+'</strong></td><td class="num" style="color:var(--gold);font-weight:600">'+rp(pa)+'</td><td class="num">'+rp(pr)+'</td><td class="ctr"><span class="chip gl">'+pct(pk)+'</span></td><td class="ctr"><span class="chip tl">'+pct(pf)+'</span></td><td class="ctr">'+stg(Math.min(pf,pk))+'</td></tr>'];
+  p.kegiatan.forEach(function(k,ki){var kf=kgF(k),kk=kgKP(k),kr=kgKR(k),ka=kgPagu(k);rows.push('<tr><td style="padding-left:22px"><span style="color:var(--txd);font-size:8.5px">'+k.id.split('-')[1]+'</span> <span style="font-size:10px;color:var(--txm)">'+k.nm+'</span></td><td class="num" style="color:var(--txm);font-size:10px">'+rp(ka)+'</td><td class="num" style="color:var(--txm);font-size:10px">'+rp(kr)+'</td><td class="ctr"><span class="chip gl" style="font-size:8px">'+pct(kk)+'</span></td><td class="ctr"><span class="chip tl" style="font-size:8px">'+pct(kf)+'</span></td><td class="ctr">'+stg(Math.min(kf,kk))+'</td></tr>');});
+  return rows.join('');
+ }).join('');
+ var pgStat=MD.program.map(function(p,i){var f=pgF(p),k=pgKP(p);return '<tr><td><span style="font-size:9px;color:var(--gold)">P'+(i+1)+'</span> <span style="font-size:10px">'+p.nm.replace('Program ','')+'</span></td><td class="ctr"><span class="chip tl">'+pct(f)+'</span></td><td class="ctr"><span class="chip gl">'+pct(k)+'</span></td><td class="ctr">'+stg(Math.min(f,k))+'</td></tr>';}).join('');
+ el.innerHTML='<div class="tuj-b fu"><div style="font-size:28px;opacity:.55">&#127919;</div><div class="tuj-dv"></div><div style="flex:1"><div style="font-size:8.5px;color:rgba(216,180,254,.4);letter-spacing:.5px;text-transform:uppercase;margin-bottom:2px">Tujuan &mdash; Dinas Kesehatan Kab. Lima Puluh Kota 2026</div><div class="tuj-nm">'+MD.tujuan.nama+'</div><div class="tuj-ds">Indikator: Usia Harapan Hidup &bull; Target: <strong style="color:#d8b4fe">'+MD.tujuan.target+' '+MD.tujuan.satuan+'</strong> &bull; Capaian: <strong style="color:#86efac">'+MD.tujuan.capaian+' '+MD.tujuan.satuan+'</strong></div></div><div class="tuj-dv"></div><div class="tuj-r"><div class="tuj-lb">Target UHH</div><div class="tuj-v">'+MD.tujuan.target+'</div><div class="tuj-lb">'+MD.tujuan.satuan+'</div></div><div class="tuj-dv"></div><div class="tuj-r"><div class="tuj-lb">Capaian</div><div class="tuj-v" style="color:#86efac">'+MD.tujuan.capaian+'</div><div class="tuj-lb">'+MD.tujuan.satuan+'</div></div></div>'
+ +buildAlertHTML()+'<div class="g4 mb18 fu2"><div class="kc gold"><div class="kc-l">Total Pagu Anggaran</div><div class="kc-v" style="font-size:17px;color:var(--gold)">'+(ta>0?rp(ta):'Belum Diatur')+'</div><div class="kc-s">5 Program &bull; '+MD.program.reduce(function(a,p){return a+p.kegiatan.length},0)+' Kegiatan</div><div class="kc-i">&#128176;</div></div>'
+ +'<div class="kc teal"><div class="kc-l">Realisasi Fisik</div><div class="kc-v" style="color:var(--teal)">'+pct(tf)+'</div><div class="kc-s">Rata-rata seluruh sub kegiatan</div><div class="kc-i">&#9989;</div><div class="pb"><div class="pb-f teal" style="width:'+Math.min(tf,100)+'%"></div></div></div>'
+ +'<div class="kc grn"><div class="kc-l">Realisasi Keuangan</div><div class="kc-v" style="color:var(--grn)">'+pct(tkp)+'</div><div class="kc-s">'+rp(tkr)+' terealisasi</div><div class="kc-i">&#128200;</div><div class="pb"><div class="pb-f grn" style="width:'+Math.min(tkp,100)+'%"></div></div></div>'
+ +'<div class="kc red"><div class="kc-l">Sisa Anggaran</div><div class="kc-v" style="font-size:17px;color:var(--red)">'+rp(ta-tkr)+'</div><div class="kc-s">'+pct(100-tkp)+' belum terserap</div><div class="kc-i">&#9203;</div></div></div>'
+  +'<div class="g2 mb18 fu3"><div class="card"><div class="sh"><span class="sh-t">Realisasi per Program</span><div class="sh-l"></div></div><div style="height:195px"><canvas id="ch-pg"></canvas></div></div>'
+ +'<div class="card"><div class="sh"><span class="sh-t">Status Capaian Program</span><div class="sh-l"></div></div><table class="dt"><thead><tr><th>Program</th><th class="ctr">Fisik</th><th class="ctr">Keuangan</th><th class="ctr">Status</th></tr></thead><tbody>'+pgStat+'</tbody></table></div></div>'
+ +'<div class="card fu4"><div class="sh"><span class="sh-t">Rincian Realisasi Program \u2192 Kegiatan</span><div class="sh-l"></div></div><table class="dt"><thead><tr><th>Program / Kegiatan</th><th class="num">Pagu Anggaran</th><th class="num">Real. Keuangan</th><th class="ctr">% Keu</th><th class="ctr">% Fisik</th><th class="ctr">Status</th></tr></thead><tbody>'+pgRows+'</tbody></table>'+(ta===0?'<div style="margin-top:9px;padding:7px 11px;background:rgba(240,180,41,.06);border-radius:6px;border-left:2px solid var(--gold);font-size:10px;color:var(--gold)">&#9432; Pagu anggaran belum diatur. Isi di <strong>Input Realisasi</strong> pada setiap sub kegiatan.</div>':'')+'</div>';
+ requestAnimationFrame(function(){
+  if(CH['pg']){CH['pg'].destroy();delete CH['pg'];}
+  var ctx=document.getElementById('ch-pg');if(!ctx)return;
+  CH['pg']=new Chart(ctx,{type:'bar',data:{labels:MD.program.map(function(_,i){return'P'+(i+1)}),datasets:[{label:'Fisik (%)',data:MD.program.map(function(p){return pgF(p).toFixed(1)}),backgroundColor:'rgba(45,212,191,.7)',borderRadius:3},{label:'Keuangan (%)',data:MD.program.map(function(p){return pgKP(p).toFixed(1)}),backgroundColor:'rgba(240,180,41,.7)',borderRadius:3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:'rgba(226,232,240,.55)',font:{size:9},boxWidth:9}}},scales:{x:{ticks:{color:'rgba(226,232,240,.4)',font:{size:9}},grid:{color:'rgba(255,255,255,.04)'}},y:{ticks:{color:'rgba(226,232,240,.4)',font:{size:9},callback:function(v){return v+'%'}},grid:{color:'rgba(255,255,255,.05)'},min:0,max:100}}}});
+ });
+}
+
+// ================================================================
+// CASCADE VIEW (with quarterly TW display)
+// ================================================================
+function twChip(val){
+ if(!val||val==='')return '<span class="tw-chip dim">&mdash;</span>';
+ return '<span class="tw-chip ylw">'+val+'</span>';
+}
+
+function renderSasCard(s,lvl){
+ var color={es2:'#93c5fd',es3:'var(--teal)',es4:'var(--gold)'}[lvl]||'var(--txt)';
+ var bclr ={es2:'rgba(59,130,246,.15)',es3:'rgba(45,212,191,.1)',es4:'rgba(240,180,41,.1)'}[lvl]||'var(--cb)';
+ var h='<div class="cc" style="border-color:'+bclr+'">';
+ h+='<div class="cc-t" style="color:'+color+'">'+s.nama+'</div>';
+ h+='<div class="cc-i">';
+ s.indikator.forEach(function(ind,ii){
+  var tw=gQtw(s.id,ii);
+  var val=gValTW(s.id,ii);
+  var hasD=twHasData(s.id,ii);
+  var isVal=!!(val&&val.validated);
+  var rowBg=isVal?'rgba(34,197,94,.06)':hasD?'rgba(245,158,11,.04)':'rgba(255,255,255,.018)';
+  var rowBdr=isVal?'rgba(34,197,94,.18)':hasD?'rgba(245,158,11,.14)':'rgba(255,255,255,.05)';
+  h+='<div class="ir" style="background:'+rowBg+';border:1px solid '+rowBdr+';border-radius:5px;margin-bottom:4px">';
+  h+='<div class="ir-top">'+tld(ind.st);
+  h+='<span class="ir-n">'+ind.nm+'</span>';
+  h+='<span style="font-size:8px;color:var(--txd)">'+ind.tgt+'</span>';
+  h+='</div>';
+  /* TW values row */
+  h+='<div class="ir-tw" style="margin:3px 0">';
+  h+='<span style="font-size:8px;color:var(--txd)">TW1:</span>'+twChip(tw[0]);
+  h+='<span style="font-size:8px;color:var(--txd)">TW2:</span>'+twChip(tw[1]);
+  h+='<span style="font-size:8px;color:var(--txd)">TW3:</span>'+twChip(tw[2]);
+  h+='<span style="font-size:8px;color:var(--txd)">TW4:</span>'+twChip(tw[3]);
+  h+='</div>';
+  /* Validation status row */
+  h+='<div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">';
+  if(!hasD){
+   h+='<span class="vbdg none" style="font-size:8px">&#9675; Belum ada data</span>';
+  } else if(isVal){
+   h+='<span class="vbdg ok" style="font-size:8px">&#10003; Tervalidasi</span>';
+   if(val.by) h+='<span style="font-size:8px;color:var(--txd)">oleh <strong>'+val.by+'</strong> &bull; '+val.at+'</span>';
+  } else {
+   var casReset=!!(val&&val.resetAt);
+   h+='<span class="vbdg pend" style="font-size:8px;animation:blink 2s infinite">&#9672; '+(casReset?'Data Diperbarui \u2014 ':'')+'Menunggu Validasi Kepala Dinas</span>';
+   if(casReset) h+='<span style="font-size:8px;color:var(--txd);margin-left:2px">'+val.resetAt+'</span>';
+  }
+  /* Validate / unvalidate button — KaDin only */
+  if(isKaDin()&&hasD){
+   if(isVal){
+    h+='<button class="val-btn unval" style="font-size:8px;padding:2px 7px;margin-left:auto" onclick="doValTW(\''+s.id+'\','+ii+')">&#10005; Batal</button>';
+   } else {
+    h+='<button class="val-btn" style="font-size:8px;padding:2px 7px;margin-left:auto;background:rgba(59,130,246,.15);border-color:rgba(59,130,246,.35);color:#93c5fd" onclick="doValTW(\''+s.id+'\','+ii+')">&#128737; Validasi</button>';
+   }
+  }
+  h+='</div>';
+  h+='</div>';
+ });
+ h+='</div></div>';
+ return h;
+}
+function renderCascade(){
+ var el=document.getElementById('view-cascade');
+ var st=valStats();
+ var twOk=st.twVal;
+ var twPend=st.twTotal-st.twVal;
+ var h='';
+
+ /* KaDin notice */
+ if(isKaDin()){
+  h+='<div style="padding:8px 14px;background:rgba(59,130,246,.08);border:1px solid rgba(59,130,246,.18);border-radius:8px;font-size:10px;color:#93c5fd;margin-bottom:12px;display:flex;align-items:center;gap:8px">';
+  h+='<span>&#128737;&#65039;</span>';
+  h+='<span>Mode Kepala Dinas: Klik <strong>&#9998; TW</strong> pada setiap indikator untuk memvalidasi capaian triwulan.</span>';
+  h+='</div>';
+ }
+
+ /* TW Validation summary bar */
+ var sumBg   = twPend>0 ? 'rgba(245,158,11,.08)' : 'rgba(34,197,94,.07)';
+ var sumBdr  = twPend>0 ? 'rgba(245,158,11,.22)' : 'rgba(34,197,94,.18)';
+ var sumClr  = twPend>0 ? 'var(--ylw)' : 'var(--grn)';
+ var pendTxt = twPend>0 ? (twPend+' menunggu validasi Kepala Dinas') : 'Semua tervalidasi';
+ h+='<div style="display:flex;gap:14px;padding:9px 14px;background:'+sumBg+';border:1px solid '+sumBdr+';border-radius:8px;margin-bottom:14px;font-size:10px;align-items:center">';
+ h+='<span>&#128202;</span>';
+ h+='<span><strong style="color:'+sumClr+'">'+twOk+'/'+st.twTotal+'</strong><span style="color:var(--txm)"> Indikator TW Tervalidasi</span></span>';
+ h+='<span style="color:var(--txd);margin:0 4px">|</span>';
+ h+='<span style="color:var(--txd)">'+pendTxt+'</span>';
+ h+='</div>';
+
+ /* Tujuan banner */
+ h+='<div style="display:flex;justify-content:center;margin-bottom:7px" class="fu">';
+ h+='<div class="lbdg tuj">&#127919; TUJUAN STRATEGIS</div></div>';
+ h+='<div class="fu" style="background:linear-gradient(135deg,rgba(168,85,247,.11),rgba(59,130,246,.07));border:1px solid rgba(168,85,247,.24);border-radius:11px;padding:14px 20px;max-width:720px;margin:0 auto 4px;text-align:center">';
+ h+='<div style="font-family:Cinzel,serif;font-size:14px;font-weight:600;color:#d8b4fe">'+MD.tujuan.nama+'</div>';
+ h+='<div style="font-size:10px;color:rgba(216,180,254,.45);margin-top:4px">Indikator: Usia Harapan Hidup &bull; Target <strong style="color:#d8b4fe">'+MD.tujuan.target+' '+MD.tujuan.satuan+'</strong> &bull; Capaian: <strong style="color:#86efac">'+MD.tujuan.capaian+' '+MD.tujuan.satuan+'</strong></div>';
+ h+='</div>';
+ h+='<div class="con-arr fu">&#8595;</div>';
+
+ /* Eselon II */
+ h+='<div class="fu2">';
+ h+='<div style="display:flex;justify-content:center;margin-bottom:9px">';
+ h+='<div class="lbdg es2">&#128203; SASARAN ESELON II &mdash; Kepala Dinas (3 Sasaran)</div></div>';
+ h+='<div class="g3">';
+ MD.sasaranII.forEach(function(s){h+=renderSasCard(s,'es2');});
+ h+='</div></div>';
+ h+='<div class="con-arr fu2">&#8595;</div>';
+
+ /* Eselon III */
+ h+='<div class="fu3">';
+ h+='<div style="display:flex;justify-content:center;margin-bottom:9px">';
+ h+='<div class="lbdg es3">&#128200; SASARAN ESELON III &mdash; Kepala Bidang (4 Sasaran)</div></div>';
+ h+='<div class="g4">';
+ MD.sasaranIII.forEach(function(s){h+=renderSasCard(s,'es3');});
+ h+='</div></div>';
+ h+='<div class="con-arr fu3">&#8595;</div>';
+
+ /* Eselon IV */
+ h+='<div class="fu4">';
+ h+='<div style="display:flex;justify-content:center;margin-bottom:9px">';
+ h+='<div class="lbdg es4">&#9881;&#65039; SASARAN ESELON IV &mdash; Kepala Seksi/Subbag (2 Sasaran)</div></div>';
+ h+='<div class="g2" style="max-width:720px;margin:0 auto">';
+ MD.sasaranIV.forEach(function(s){h+=renderSasCard(s,'es4');});
+ h+='</div></div>';
+ h+='<div class="con-arr fu4">&#8595;</div>';
+
+ /* Program */
+ h+='<div class="fu4">';
+ h+='<div style="display:flex;justify-content:center;margin-bottom:9px">';
+ h+='<div class="lbdg pg">&#128176; PROGRAM &amp; OUTCOME (5 Program)</div></div>';
+ h+='<div class="g5">';
+ MD.program.forEach(function(p,i){
+  var f=pgF(p),k=pgKP(p),pa=pgPagu(p);
+  h+='<div class="cc" style="border-color:rgba(239,68,68,.16)">';
+  h+='<div class="cc-t" style="color:#fca5a5;font-size:10px">P'+(i+1)+'. '+p.nm+'</div>';
+  h+='<div style="font-size:8.5px;color:var(--txm);margin-bottom:6px;line-height:1.4">'+p.outcome.substring(0,60)+'...</div>';
+  h+='<div style="font-size:9px;color:var(--gold);margin-bottom:5px">'+(pa>0?rp(pa):'Belum diisi')+'</div>';
+  h+='<div style="display:flex;gap:4px">';
+  h+='<span class="chip tl" style="font-size:8px">F:'+pct(f)+'</span>';
+  h+='<span class="chip gl" style="font-size:8px">K:'+pct(k)+'</span></div>';
+  h+='<div class="pb" style="margin-top:6px">';
+  h+='<div class="pb-f red" style="width:'+f+'%;background:rgba(239,68,68,.55)"></div></div>';
+  h+='</div>';
+ });
+ h+='</div></div>';
+
+ /* Legend */
+ h+='<div class="card fu4" style="margin-top:16px">';
+ h+='<div class="sh"><span class="sh-t">Keterangan</span><div class="sh-l"></div></div>';
+ h+='<div style="display:flex;gap:18px;flex-wrap:wrap;font-size:10.5px">';
+ h+='<div class="flex">'+tld('grn')+'<span>Sesuai/Melampaui Target</span></div>';
+ h+='<div class="flex">'+tld('ylw')+'<span>Mendekati Target</span></div>';
+ h+='<div class="flex">'+tld('red')+'<span>Di Bawah Target</span></div></div>';
+ h+='</div>';
+
+ el.innerHTML=h;
+}
+function renderProgram(){
+ var el=document.getElementById('view-program');
+ var totalSK=MD.program.reduce(function(a,p){return a+p.kegiatan.reduce(function(b,k){return b+k.sk.length},0)},0);
+ var st=valStats();
+ var skClr=st.skVal===st.skTotal&&st.skTotal>0?'var(--grn)':st.skVal>0?'var(--ylw)':'var(--txd)';
+ var h='';
+ if(isKaDin()){h+='<div class="kadin-banner">&#128737;&#65039; <strong>Mode Kepala Dinas:</strong>&nbsp; Anda dapat memvalidasi data sub kegiatan. Buka setiap kegiatan dan klik <strong style="color:#93c5fd">&#9998; Validasi</strong> pada sub kegiatan.</div>';}
+ h+='<div class="val-sum fu"><div class="val-sum-item"><div class="val-sum-n" style="color:'+skClr+'">'+st.skVal+'/'+st.skTotal+'</div><div class="val-sum-l">Sub Kegiatan<br>Tervalidasi</div></div><div class="val-sum-item"><div class="val-sum-n" style="color:'+(st.skTotal-st.skVal>0?'var(--ylw)':'var(--txd)')+'">'+( st.skTotal-st.skVal)+'</div><div class="val-sum-l">Sub Kegiatan<br>Belum Divalidasi</div></div></div>';
+ h+='<div class="sh fu"><span class="sh-t">Program &amp; Anggaran \u2014 Ringkasan Sub Kegiatan</span><div class="sh-l"></div><span style="font-size:9px;color:var(--txm)">'+MD.program.length+' Prog &bull; '+MD.program.reduce(function(a,p){return a+p.kegiatan.length},0)+' Keg &bull; '+totalSK+' Sub Keg</span></div>';
+ h+='<div style="padding:8px 12px;background:rgba(45,212,191,.06);border:1px solid rgba(45,212,191,.15);border-radius:7px;font-size:10px;margin-bottom:12px;color:var(--txm)">&#128203; Halaman ini menampilkan ringkasan data sub kegiatan. Untuk mengisi atau mengubah data, gunakan menu <strong style="color:var(--teal)">Input Realisasi Sub Keg.</strong></div><div>';
+ MD.program.forEach(function(p,pi){
+  var pa=pgPagu(p),pf=pgF(p),pk=pgKP(p),pr=pgKR(p);
+  h+='<div class="pt-item"><div class="pt-hdr" onclick="tog(\'pg'+pi+'\')">';
+  h+='<span class="chev" id="cv-pg'+pi+'">&#9658;</span>';
+  h+='<div style="flex:1"><div style="display:flex;align-items:center;gap:7px;flex-wrap:wrap"><span style="font-size:9px;color:var(--gold);font-weight:700;background:var(--gdim);padding:1px 6px;border-radius:3px;border:1px solid rgba(240,180,41,.2)">P'+(pi+1)+'</span><span class="pt-nm">'+p.nm+'</span></div>';
+  h+='<div style="font-size:8.5px;color:var(--txm);margin-top:2px">'+p.outcome+'</div></div>';
+  h+='<div class="pt-info"><div style="text-align:right;margin-right:4px"><div style="font-size:11px;font-weight:600;color:'+(pa>0?'var(--gold)':'var(--txd)')+'">'+( pa>0?rp(pa):'Belum diatur')+'</div><div style="font-size:8px;color:var(--txm)">'+p.kegiatan.length+' Keg &bull; '+p.kegiatan.reduce(function(a,k){return a+k.sk.length},0)+' SK</div></div>';
+  h+='<span class="chip tl">F '+pct(pf)+'</span><span class="chip gl">K '+pct(pk)+'</span></div></div>';
+  h+='<div class="pt-body" id="b-pg'+pi+'">';
+  if(p.ind.length){h+='<div class="ib" style="border-left-color:var(--pur);margin-bottom:9px"><div class="ib-t" style="color:#d8b4fe">INDIKATOR OUTCOME PROGRAM</div>'+p.ind.map(function(ind){return'<div class="ir-top" style="font-size:9.5px;margin-bottom:3px">'+tld('ylw')+'<span class="ir-n">'+ind.nm+'</span><span style="font-size:9px;color:var(--txd)">Target: '+ind.tgt+'</span></div>';}).join('')+'</div>';}
+  p.kegiatan.forEach(function(k,ki){
+   var ka=kgPagu(k),kf=kgF(k),kk=kgKP(k),kr=kgKR(k);
+   h+='<div class="kg-item"><div class="kg-hdr" onclick="tog(\'kg'+pi+'-'+ki+'\')">';
+   h+='<span class="chev" id="cv-kg'+pi+'-'+ki+'" style="font-size:9px">&#9658;</span>';
+   h+='<div style="flex:1"><div style="display:flex;align-items:center;gap:6px"><span style="font-size:8.5px;color:var(--teal);font-weight:700;background:var(--tdim);padding:1px 5px;border-radius:3px;border:1px solid rgba(45,212,191,.18)">'+k.id.split('-')[1]+'</span><span class="kg-nm">'+k.nm+'</span></div></div>';
+   h+='<div class="pt-info" style="gap:5px"><div style="text-align:right;font-size:9.5px;margin-right:3px"><div style="font-weight:600;color:'+(ka>0?'var(--gold)':'var(--txd)')+'">'+( ka>0?rp(ka):'&mdash;')+'</div><div style="font-size:8px;color:var(--txm)">'+k.sk.length+' Sub Kegiatan</div></div>';
+   h+='<span class="chip tl" style="font-size:8px">F '+pct(kf)+'</span><span class="chip gl" style="font-size:8px">K '+pct(kk)+'</span></div></div>';
+   h+='<div class="kg-body" id="b-kg'+pi+'-'+ki+'">';
+   if(k.ind.length){h+='<div class="ib" style="border-left-color:var(--teal);margin-bottom:8px"><div class="ib-t" style="color:var(--teal)">INDIKATOR KEGIATAN</div>'+k.ind.map(function(ind){return'<div class="ir-top" style="font-size:9.5px;margin-bottom:3px">'+tld('ylw')+'<span class="ir-n">'+ind.nm+'</span><span style="font-weight:600;color:var(--teal);font-size:9px">'+ind.tgt+'</span></div>';}).join('')+'</div>';}
+   k.sk.forEach(function(s,si){
+    var d=gSk(s.id)||{deskripsi:'',pagu:0,fisik:Array(12).fill(0),keuangan:Array(12).fill(0),kendala:'',rtl:''};
+    var sa=d.pagu||0,sf=skF(s.id),sk2=skK(s.id),skp=sa>0?(sk2/sa)*100:0;
+    h+='<div class="sk-card"><div class="sk-card-top"><span class="sk-card-num">SK'+(si+1)+'</span><span class="sk-card-nm">'+s.nm+'</span>';
+    h+='<div class="sk-card-chips"><span class="chip tl" style="font-size:8px">F '+pct(sf)+'</span><span class="chip gl" style="font-size:8px">K '+pct(skp)+'</span></div></div>';
+    if(d.deskripsi){h+='<div class="sk-desc">'+d.deskripsi+'</div>';}
+    else{h+='<div class="sk-desc" style="color:var(--txd);font-style:italic">Deskripsi belum diisi</div>';}
+    h+='<div class="sk-meta">';
+    h+='<div class="sk-meta-item"><div class="sk-meta-lbl">Pagu Anggaran</div><div class="sk-meta-val" style="color:'+(sa>0?'var(--gold)':'var(--txd)')+'">'+( sa>0?rp(sa):'Belum diatur')+'</div></div>';
+    h+='<div class="sk-meta-item"><div class="sk-meta-lbl">Real. Keuangan</div><div class="sk-meta-val" style="color:var(--grn)">'+rp(sk2)+(sa>0?' <span style="font-size:9px;color:var(--txd)">('+pct(skp)+')</span>':'')+'</div></div>';
+    h+='<div class="sk-meta-item"><div class="sk-meta-lbl">Real. Fisik</div><div class="sk-meta-val" style="color:var(--teal)">'+pct(sf)+'</div></div>';
+    h+='<div class="sk-meta-item"><div class="sk-meta-lbl">Sisa Anggaran</div><div class="sk-meta-val" style="color:var(--red)">'+rp(Math.max(0,sa-sk2))+'</div></div></div>';
+    if(d.kendala||d.rtl){
+     h+='<div class="g2" style="gap:8px;margin-top:6px">';
+     h+='<div><div class="sk-krl-lbl">Kendala</div><div class="sk-krl-val">'+orDash(d.kendala)+'</div></div>';
+     h+='<div><div class="sk-krl-lbl">Rencana Tindak Lanjut</div><div class="sk-krl-val">'+orDash(d.rtl)+'</div></div></div>';
+    }
+    var vsk=gValSK(s.id);var hd=skHasData(s.id);var isv=!!(vsk&&vsk.validated);
+    var vRowBg=isv?'rgba(34,197,94,.07)':hd?'rgba(245,158,11,.06)':'rgba(255,255,255,.02)';
+    var vRowBdr=isv?'rgba(34,197,94,.2)':hd?'rgba(245,158,11,.18)':'rgba(255,255,255,.06)';
+    h+='<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:8px;padding:7px 10px;background:'+vRowBg+';border:1px solid '+vRowBdr+';border-radius:6px">';
+    if(!hd){
+     h+='<span class="vbdg none" style="font-size:8.5px">&#9675; Belum ada data</span>';
+     h+='<span style="font-size:8.5px;color:var(--txd);flex:1">Isi data di Input Realisasi Sub Keg.</span>';
+    } else if(isv){
+     h+='<span class="vbdg ok">&#10003; Tervalidasi</span>';
+     if(vsk.by) h+='<span style="font-size:8.5px;color:var(--txd);flex:1">Divalidasi oleh: <strong style="color:var(--grn)">'+vsk.by+'</strong> &bull; '+vsk.at+'</span>';
+     if(isKaDin()) h+='<button class="val-btn unval" style="font-size:8.5px;padding:3px 9px" onclick="doValSK(\''+s.id+'\')">&#10005; Batal Validasi</button>';
+    } else {
+     var hasReset=!!(vsk&&vsk.resetAt);
+     h+='<span class="vbdg pend">&#9672; '+(hasReset?'Data Diperbarui \u2014 ':'')+'Menunggu Validasi Kepala Dinas</span>';
+     if(hasReset) h+='<span style="font-size:8px;color:var(--txd)">Diperbarui: '+vsk.resetAt+'</span>';
+     h+='<span style="flex:1"></span>';
+     if(isKaDin()) h+='<button class="val-btn" style="font-size:8.5px;padding:3px 10px;background:rgba(59,130,246,.15);border-color:rgba(59,130,246,.3);color:#93c5fd" onclick="doValSK(\''+s.id+'\')">&#128737; Validasi</button>';
+    }
+    h+='</div></div>';
+   });
+   h+='<div class="agg-bar"><span class="agg-bar-lbl">Total Pagu Kegiatan:</span><span class="agg-bar-val">'+(ka>0?rp(ka):'Belum diisi')+'</span><span style="font-size:9px;color:var(--txm);margin-left:10px">Real. Keu: '+rp(kr)+' ('+pct(kk)+')</span></div>';
+   h+='</div></div>';
+  });
+  h+='<div class="agg-bar" style="margin-top:4px;background:rgba(240,180,41,.06)"><span class="agg-bar-lbl" style="color:var(--txm)">Total Pagu Program:</span><span class="agg-bar-val">'+(pa>0?rp(pa):'Belum diisi')+'</span><span style="font-size:9px;color:var(--txm);margin-left:10px">Real. Keu: '+rp(pr)+' ('+pct(pk)+')</span></div>';
+  h+='</div></div>';
+ });
+ h+='</div>';
+ el.innerHTML=h;
+}
+
+// ================================================================
+// INPUT REALISASI (card grid)
+// ================================================================
+function renderInputSel(){
+ var el=document.getElementById('view-inputsel');
+ var h='<div class="sh fu"><span class="sh-t">Input Realisasi Sub Kegiatan</span><div class="sh-l"></div><span style="font-size:9px;color:var(--txm)">Klik card untuk input deskripsi, pagu, realisasi, kendala &amp; RTL</span></div>';
+ h+='<div class="fu" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:11px">';
+ MD.program.forEach(function(p,pi){
+  p.kegiatan.forEach(function(k,ki){
+   k.sk.forEach(function(s,si){
+    var d=gSk(s.id)||{deskripsi:'',pagu:0,fisik:Array(12).fill(0),keuangan:Array(12).fill(0),kendala:'',rtl:''};
+    var sa=d.pagu||0,sf=skF(s.id),sk2=skK(s.id),skp=sa>0?(sk2/sa)*100:0;
+    var hasData=d.deskripsi||sa>0;
+    h+='<div class="sk-sel-card" style="border-color:'+(hasData?'rgba(45,212,191,.2)':'var(--cbr)')+';" onclick="openMod(\''+s.id+'\')">';
+    h+='<div style="display:flex;align-items:flex-start;gap:6px;margin-bottom:7px">';
+    h+='<span style="font-size:8px;background:var(--gdim);color:var(--gold);border:1px solid rgba(240,180,41,.18);border-radius:3px;padding:2px 5px;white-space:nowrap;flex-shrink:0;margin-top:1px">P'+(pi+1)+'&middot;'+k.id.split('-')[1]+'&middot;SK'+(si+1)+'</span>';
+    h+='<div style="font-size:11px;font-weight:500;line-height:1.4;flex:1">'+s.nm+'</div>';
+    h+=(hasData?'<span style="font-size:9px;color:var(--teal)">&#10003;</span>':'');
+    h+='</div>';
+    if(d.deskripsi){h+='<div style="font-size:9px;color:var(--txm);margin-bottom:7px;line-height:1.4;font-style:italic">"'+d.deskripsi.substring(0,60)+(d.deskripsi.length>60?'...':'')+'"</div>';}
+    h+='<div style="font-size:8.5px;color:var(--txm);margin-bottom:8px">'+p.nm.replace('Program ','')+'</div>';
+    h+='<div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px">';
+    h+='<span style="font-size:9px;color:'+(sa>0?'var(--gold)':'var(--txd)')+'">Pagu: '+(sa>0?rp(sa):'Belum diatur')+'</span>';
+    h+='</div>';
+    h+='<div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:6px"><span class="chip tl">Fisik '+pct(sf)+'</span>'+(sa>0?'<span class="chip gl">Keu '+pct(skp)+'</span>':'')+'</div>';
+    h+='<div class="pb"><div class="pb-f teal" style="width:'+Math.min(sf,100)+'%"></div></div>';
+    var vsk=gValSK(s.id);var hd=skHasData(s.id);var isv=!!(vsk&&vsk.validated);
+    h+='<div style="margin-top:7px;padding-top:7px;border-top:1px solid rgba(255,255,255,.05)">'+vBadge(isv,hd)+(isv&&vsk.by?'<span style="font-size:8px;color:var(--txd);margin-left:6px">oleh '+vsk.by+'</span>':'')+(hd&&!isv&&!isKaDin()?'<span style="font-size:8px;color:var(--txd);margin-left:6px">Menunggu validasi Kepala Dinas</span>':'')+ '</div>';
+    h+='</div>';
+   });
+  });
+ });
+ h+='</div>';
+ el.innerHTML=h;
+}
+
+// ================================================================
+// INPUT CAPAIAN TRIWULAN (full page)
+// ================================================================
+function renderInputKPI(){
+ var el=document.getElementById('view-inputkpi');
+ var h='';
+ h+='<div class="sh fu"><span class="sh-t">Input Capaian Indikator Kinerja &mdash; 4 Triwulan</span>';
+ h+='<div class="sh-l"></div>';
+ h+='<span style="font-size:9px;color:var(--txm)">Isi capaian per indikator lalu klik Simpan. Validasi oleh Kepala Dinas.</span></div>';
+
+ function renderSasGroup(sasArr,title,clr){
+  h+='<div class="tw-input-section fu2">';
+  h+='<div class="tw-sas-hdr" style="color:'+clr+'">'+title+'</div>';
+  sasArr.forEach(function(sas){
+   h+='<div style="margin-bottom:14px">';
+   h+='<div style="font-size:10.5px;font-weight:500;color:var(--txt);margin-bottom:7px;padding:5px 10px;background:rgba(255,255,255,.025);border-radius:5px;border-left:2px solid '+clr+'">'+sas.nama+'</div>';
+   sas.indikator.forEach(function(ind,ii){
+    var tw=gQtw(sas.id,ii);
+    var val=gValTW(sas.id,ii);
+    var hasD=twHasData(sas.id,ii);
+    var isVal=!!(val&&val.validated);
+    var rowBg =isVal?'rgba(34,197,94,.06)':hasD?'rgba(245,158,11,.04)':'rgba(255,255,255,.018)';
+    var rowBdr=isVal?'rgba(34,197,94,.18)':hasD?'rgba(245,158,11,.14)':'rgba(255,255,255,.055)';
+    var iid='tw_'+sas.id+'_'+ii;
+    h+='<div class="tw-ind-row" id="'+iid+'" style="background:'+rowBg+';border-color:'+rowBdr+';flex-direction:column;align-items:stretch;gap:8px">';
+    /* Top: name + validation badge */
+    h+='<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">';
+    h+='<div style="flex:1"><div class="tw-ind-nm">'+ind.nm+'</div>';
+    h+='<div class="tw-ind-tgt">Target: '+ind.tgt+'</div></div>';
+    /* Validation badge */
+    if(!hasD){
+     h+='<span class="vbdg none" style="font-size:8px">&#9675; Belum ada data</span>';
+    } else if(isVal){
+     h+='<span class="vbdg ok" style="font-size:8px">&#10003; Tervalidasi oleh Kepala Dinas</span>';
+    } else {
+     var twReset=!!(val&&val.resetAt);
+     h+='<span class="vbdg pend" style="font-size:8px">&#9672; '+(twReset?'Data Diperbarui \u2014 ':'')+'Menunggu Validasi</span>';
+     if(twReset) h+='<span style="font-size:8px;color:var(--txd);margin-left:4px">'+val.resetAt+'</span>';
+    }
+    /* Validate button for KaDin */
+    if(isKaDin()&&hasD){
+     if(isVal){
+      h+='<button class="val-btn unval" style="font-size:8px;padding:2px 8px" onclick="doValTW(\''+sas.id+'\','+ii+')">&#10005; Batal Validasi</button>';
+     } else {
+      h+='<button class="val-btn" style="font-size:8px;padding:2px 8px;background:rgba(59,130,246,.15);border-color:rgba(59,130,246,.3);color:#93c5fd" onclick="doValTW(\''+sas.id+'\','+ii+')">&#128737; Validasi</button>';
+     }
+    }
+    h+='</div>';
+    /* TW inputs + Simpan button */
+    h+='<div style="display:flex;align-items:flex-end;gap:6px;flex-wrap:wrap">';
+    ['TW 1','TW 2','TW 3','TW 4'].forEach(function(lbl,ti){
+     h+='<div class="tw-box">';
+     h+='<div class="tw-box-lbl">'+lbl+'</div>';
+     h+='<input type="text" id="'+iid+'_'+ti+'" value="'+tw[ti]+'" placeholder="\u2014" style="'+(isVal?'opacity:.6;pointer-events:none;':'')+'" />';
+     h+='</div>';
+    });
+    h+='<button class="btn-p" style="padding:5px 14px;font-size:9.5px;margin-left:4px;flex-shrink:0" onclick="saveTWRow(\''+sas.id+'\','+ii+',\''+iid+'\')">&#128190; Simpan</button>';
+    h+='</div>';
+    /* If validated: show validator info */
+    if(isVal&&val.by){
+     h+='<div style="font-size:8.5px;color:var(--txd)">Divalidasi oleh: <strong style="color:var(--grn)">'+val.by+'</strong> &bull; '+val.at+'</div>';
+    }
+    h+='</div>'; /* end tw-ind-row */
+   });
+   h+='</div>';
+  });
+  h+='</div>';
+ }
+
+ renderSasGroup(MD.sasaranII,'SASARAN ESELON II \u2014 Kepala Dinas','#93c5fd');
+ renderSasGroup(MD.sasaranIII,'SASARAN ESELON III \u2014 Kepala Bidang','var(--teal)');
+ renderSasGroup(MD.sasaranIV,'SASARAN ESELON IV \u2014 Kepala Seksi/Subbag','var(--gold)');
+ el.innerHTML=h;
+}
+function saveTW(sasId,indIdx,twIdx,val){
+ var tw=gQtw(sasId,indIdx);
+ tw[twIdx]=val;
+ sQtw(sasId,indIdx,tw);
+}
+
+// ================================================================
+// MODAL — INPUT REALISASI (3 TABS: Deskripsi | Pagu+Realisasi | Kendala+RTL)
+// ================================================================
+// ================================================================
+// VALIDATION SYSTEM
+// ================================================================
+function isKaDin(){
+ var u=sessionStorage.getItem('cur_user');if(!u)return false;
+ try{return JSON.parse(u).jabatan==='Kepala Dinas Kesehatan';}catch(e){return false;}
+}
+function curUserNm(){
+ var u=sessionStorage.getItem('cur_user');if(!u)return 'Kepala Dinas';
+ try{return JSON.parse(u).nama;}catch(e){return 'Kepala Dinas';}
+}
+function nowStr(){
+ var d=new Date();
+ return d.toLocaleDateString('id-ID',{day:'2-digit',month:'short',year:'numeric'})+' '+('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2);
+}
+function gValSK(id){try{return JSON.parse(localStorage.getItem('vsk_'+id)||'null')}catch(e){return null}}
+function sValSK(id,o){localStorage.setItem('vsk_'+id,JSON.stringify(o))}
+function gValTW(sId,ii){try{return JSON.parse(localStorage.getItem('vtw_'+sId+'_'+ii)||'null')}catch(e){return null}}
+function sValTW(sId,ii,o){localStorage.setItem('vtw_'+sId+'_'+ii,JSON.stringify(o))}
+function skHasData(id){var d=gSk(id);return !!(d&&(d.pagu>0||(d.deskripsi&&d.deskripsi.length>0)));}
+function twHasData(sId,ii){var tw=gQtw(sId,ii);return tw.some(function(v){return v&&v!==''});}
+function vBadge(validated,hasData){
+ if(!hasData)return '<span class="vbdg none">&#9675; Belum ada data</span>';
+ if(validated)return '<span class="vbdg ok">&#10003; Tervalidasi</span>';
+ return '<span class="vbdg pend">&#9672; Menunggu Validasi</span>';
+}
+function vBtn(fn,unfn,validated,hasData){
+ if(!isKaDin()||!hasData)return '';
+ if(validated)return '<button class="val-btn unval" onclick="'+unfn+'">&#10005; Batal Validasi</button>';
+ return '<button class="val-btn" onclick="'+fn+'">&#9998; Validasi</button>';
+}
+function doValSK(skId){
+ sValSK(skId,{validated:true,by:curUserNm(),at:nowStr()});
+ refreshCurView();showToast('Sub Kegiatan berhasil divalidasi ✓');
+}
+function doUnvalSK(skId){
+ sValSK(skId,{validated:false});
+ refreshCurView();showToast('Validasi sub kegiatan dibatalkan');
+}
+function doValTW(sId,ii){
+ sValTW(sId,ii,{validated:true,by:curUserNm(),at:nowStr()});
+ refreshCurView();showToast('Capaian triwulan berhasil divalidasi ✓');
+}
+function doUnvalTW(sId,ii){
+ sValTW(sId,ii,{validated:false});
+ refreshCurView();showToast('Validasi capaian triwulan dibatalkan');
+}
+function refreshCurView(){
+ var cv=document.querySelector('.view.act');if(!cv)return;
+ if(cv.id==='view-cascade')renderCascade();
+ else if(cv.id==='view-program')renderProgram();
+ else if(cv.id==='view-exec')renderExec();
+ else if(cv.id==='view-inputsel')renderInputSel();
+ else if(cv.id==='view-inputkpi')renderInputKPI();
+}
+// Count validation stats
+function valStats(){
+ var skTotal=0,skVal=0,twTotal=0,twVal=0;
+ MD.program.forEach(function(p){p.kegiatan.forEach(function(k){k.sk.forEach(function(s){
+  if(skHasData(s.id)){skTotal++;var v=gValSK(s.id);if(v&&v.validated)skVal++;}
+ })})});
+ var sAll=MD.sasaranII.concat(MD.sasaranIII).concat(MD.sasaranIV);
+ sAll.forEach(function(sas){sas.indikator.forEach(function(ind,ii){
+  if(twHasData(sas.id,ii)){twTotal++;var v=gValTW(sas.id,ii);if(v&&v.validated)twVal++;}
+ });});
+ return{skTotal:skTotal,skVal:skVal,twTotal:twTotal,twVal:twVal};
+}
+
+function buildAlertHTML(){
+ /* ── Compute per-program/kegiatan/SK pending lists ── */
+ var pgList=[];
+ var totalSKpend=0, totalSKhas=0, totalSKnodata=0;
+
+ MD.program.forEach(function(p,pi){
+  var kgList=[];
+  p.kegiatan.forEach(function(k,ki){
+   var skPendList=[];
+   var skNodataList=[];
+   k.sk.forEach(function(s,si){
+    if(skHasData(s.id)){
+     var v=gValSK(s.id);
+     if(!v||!v.validated){ skPendList.push({si:si,nm:s.nm,id:s.id}); totalSKpend++; }
+     totalSKhas++;
+    } else {
+     skNodataList.push({si:si,nm:s.nm,id:s.id}); totalSKnodata++;
+    }
+   });
+   if(skPendList.length>0||skNodataList.length>0){
+    kgList.push({ki:ki,nm:k.nm,skPend:skPendList,skNodata:skNodataList});
+   }
+  });
+  if(kgList.length>0){
+   pgList.push({pi:pi,nm:p.nm,kgList:kgList});
+  }
+ });
+
+ /* ── Compute TW pending per-sasaran/indicator ── */
+ var twPendList=[];
+ var sAll=MD.sasaranII.concat(MD.sasaranIII).concat(MD.sasaranIV);
+ sAll.forEach(function(sas){
+  var indPend=[];
+  sas.indikator.forEach(function(ind,ii){
+   if(twHasData(sas.id,ii)){
+    var v=gValTW(sas.id,ii);
+    if(!v||!v.validated){ indPend.push({ii:ii,nm:ind.nm,tgt:ind.tgt,sasId:sas.id}); }
+   }
+  });
+  if(indPend.length>0){ twPendList.push({sasNm:sas.nama,inds:indPend}); }
+ });
+
+ var twPend=twPendList.reduce(function(a,x){return a+x.inds.length;},0);
+ var totPend=totalSKpend+twPend;
+
+ /* ── No data at all ── */
+ if(totalSKhas===0&&twPend===0&&totalSKnodata===0){
+  return '<div style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:8px;margin-bottom:14px;font-size:10px;color:var(--txm)"><span style="font-size:16px">&#128203;</span><span>Belum ada data realisasi atau capaian triwulan yang diinputkan.</span></div>';
+ }
+ /* ── All validated ── */
+ if(totPend===0){
+  return '<div style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:rgba(34,197,94,.07);border:1px solid rgba(34,197,94,.2);border-radius:8px;margin-bottom:14px;font-size:10px;color:var(--grn)"><span style="font-size:18px">&#10003;</span><strong style="margin-right:6px">Semua Data Tervalidasi</strong><span style="color:var(--txm)">Tidak ada sub kegiatan atau capaian triwulan yang menunggu validasi Kepala Dinas.</span></div>';
+ }
+
+ var h='<div class="val-alert-wrap">';
+
+ /* ── HEADER ── */
+ h+='<div class="val-alert-hdr">';
+ h+='<span style="font-size:20px">&#9888;&#65039;</span>';
+ h+='<div style="flex:1">';
+ h+='<div style="font-size:12px;font-weight:700;color:var(--ylw)">ALERT \u2014 DATA MENUNGGU VALIDASI KEPALA DINAS</div>';
+ h+='<div style="font-size:9.5px;color:var(--txm);margin-top:2px">Terdapat <strong style="color:var(--ylw)">'+totalSKpend+' Sub Kegiatan</strong> dan <strong style="color:#93c5fd">'+twPend+' Capaian Triwulan</strong> yang belum divalidasi</div>';
+ h+='</div>';
+ h+='<div style="display:flex;gap:6px;flex-shrink:0">';
+ if(isKaDin()){
+  h+='<button class="btn-s" style="font-size:9px;padding:5px 10px" onclick="sw(\'program\')">&#128203; Ke Program</button>';
+  h+='<button class="btn-s" style="font-size:9px;padding:5px 10px" onclick="sw(\'inputkpi\')">&#128202; Ke Capaian TW</button>';
+ } else {
+  h+='<span style="font-size:9px;color:var(--txd);align-self:center">Menunggu tindakan Kepala Dinas</span>';
+ }
+ h+='</div></div>';
+
+ /* ── BODY: two columns ── */
+ h+='<div class="val-alert-body">';
+
+ /* ══ PANEL 1: Sub Kegiatan ══ */
+ h+='<div class="val-panel">';
+ h+='<div class="val-panel-title"><span style="font-size:14px">&#128203;</span> Sub Kegiatan Belum Divalidasi</div>';
+
+ if(pgList.length===0){
+  h+='<div style="font-size:10px;color:var(--grn);padding:8px 0">&#10003; Semua sub kegiatan tervalidasi</div>';
+ } else {
+  pgList.forEach(function(pg){
+   /* Program header */
+   h+='<div style="margin-bottom:10px">';
+   h+='<div style="display:flex;align-items:center;gap:6px;padding:5px 8px;background:rgba(240,180,41,.07);border-left:3px solid var(--gold);border-radius:0 5px 5px 0;margin-bottom:5px">';
+   h+='<span style="font-size:9px;font-weight:700;color:var(--gold);background:var(--gdim);padding:1px 6px;border-radius:3px;flex-shrink:0">P'+(pg.pi+1)+'</span>';
+   h+='<span style="font-size:10px;font-weight:600;color:var(--txt)">'+pg.nm.replace('Program ','')+'</span>';
+   h+='</div>';
+
+   pg.kgList.forEach(function(kg){
+    /* Kegiatan header */
+    h+='<div style="margin-left:10px;margin-bottom:6px">';
+    h+='<div style="display:flex;align-items:center;gap:5px;padding:4px 8px;background:rgba(45,212,191,.06);border-left:2px solid var(--teal);border-radius:0 4px 4px 0;margin-bottom:4px">';
+    h+='<span style="font-size:8.5px;font-weight:700;color:var(--teal);background:var(--tdim);padding:1px 5px;border-radius:3px;flex-shrink:0">K'+(kg.ki+1)+'</span>';
+    h+='<span style="font-size:9.5px;color:var(--txm)">'+kg.nm+'</span>';
+    h+='</div>';
+
+    /* Pending SKs */
+    if(kg.skPend.length>0){
+     kg.skPend.forEach(function(sk){
+      h+='<div style="display:flex;align-items:center;gap:6px;padding:4px 10px 4px 22px;border-bottom:1px solid rgba(255,255,255,.04)">';
+      h+='<span style="font-size:8px;color:var(--txd);flex-shrink:0;min-width:26px">SK'+(sk.si+1)+'</span>';
+      h+='<span style="font-size:9.5px;color:var(--txm);flex:1;line-height:1.35">'+sk.nm+'</span>';
+      h+='<span class="vbdg pend" style="font-size:7.5px;flex-shrink:0">&#9672; Pending</span>';
+      if(isKaDin()){
+       h+='<button class="val-btn" style="font-size:7.5px;padding:2px 7px;background:rgba(59,130,246,.12);border-color:rgba(59,130,246,.28);color:#93c5fd" onclick="doValSKrefresh(\''+sk.id+'\')">&#128737; Validasi</button>';
+      }
+      h+='</div>';
+     });
+    }
+    /* No-data SKs (dimmer) */
+    if(kg.skNodata.length>0){
+     kg.skNodata.forEach(function(sk){
+      h+='<div style="display:flex;align-items:center;gap:6px;padding:4px 10px 4px 22px;border-bottom:1px solid rgba(255,255,255,.04);opacity:.5">';
+      h+='<span style="font-size:8px;color:var(--txd);flex-shrink:0;min-width:26px">SK'+(sk.si+1)+'</span>';
+      h+='<span style="font-size:9.5px;color:var(--txd);flex:1;line-height:1.35">'+sk.nm+'</span>';
+      h+='<span class="vbdg none" style="font-size:7.5px;flex-shrink:0">&#9675; Belum ada data</span>';
+      h+='</div>';
+     });
+    }
+    h+='</div>'; /* end kg */
+   });
+   h+='</div>'; /* end pg */
+  });
+ }
+
+ /* No-data total note */
+ if(totalSKnodata>0){
+  h+='<div style="margin-top:6px;padding:5px 9px;background:rgba(255,255,255,.025);border-radius:5px;font-size:9px;color:var(--txd)">&#9675; '+totalSKnodata+' sub kegiatan belum ada data sama sekali</div>';
+ }
+ h+='</div>'; /* end panel 1 */
+
+ /* ══ PANEL 2: Capaian Triwulan ══ */
+ h+='<div class="val-panel">';
+ h+='<div class="val-panel-title"><span style="font-size:14px">&#128202;</span> Capaian Triwulan Belum Divalidasi</div>';
+
+ if(twPendList.length===0){
+  h+='<div style="font-size:10px;color:var(--grn);padding:8px 0">&#10003; Semua capaian triwulan tervalidasi</div>';
+ } else {
+  twPendList.forEach(function(sg){
+   /* Sasaran header */
+   h+='<div style="margin-bottom:10px">';
+   h+='<div style="padding:4px 9px;background:rgba(59,130,246,.07);border-left:2px solid #93c5fd;border-radius:0 4px 4px 0;font-size:9.5px;font-weight:500;color:#93c5fd;margin-bottom:5px;line-height:1.35">'+sg.sasNm+'</div>';
+   sg.inds.forEach(function(ind){
+    h+='<div style="display:flex;align-items:center;gap:6px;padding:5px 9px 5px 14px;border-bottom:1px solid rgba(255,255,255,.04)">';
+    h+='<div style="flex:1">';
+    h+='<div style="font-size:9.5px;color:var(--txm);line-height:1.35">'+ind.nm+'</div>';
+    h+='<div style="font-size:8.5px;color:var(--txd);margin-top:1px">Target: '+ind.tgt+'</div>';
+    h+='</div>';
+    h+='<span class="vbdg pend" style="font-size:7.5px;flex-shrink:0">&#9672; Pending</span>';
+    if(isKaDin()){
+     h+='<button class="val-btn" style="font-size:7.5px;padding:2px 7px;background:rgba(59,130,246,.12);border-color:rgba(59,130,246,.28);color:#93c5fd" onclick="doValTWrefresh(\''+ind.sasId+'\','+ind.ii+')">&#128737; Validasi</button>';
+    }
+    h+='</div>';
+   });
+   h+='</div>';
+  });
+ }
+ h+='</div>'; /* end panel 2 */
+ h+='</div>'; /* end body */
+ h+='</div>'; /* end wrap */
+ return h;
+}
+
+/* Quick-validate from Exec view and refresh */
+function doValSKrefresh(skId){
+ sValSK(skId,{validated:true,by:curUserNm(),at:nowStr()});
+ renderExec();
+ showToast('Sub Kegiatan berhasil divalidasi \u2713');
+}
+function doValTWrefresh(sasId,ii){
+ sValTW(sasId,ii,{validated:true,by:curUserNm(),at:nowStr()});
+ renderExec();
+ showToast('Capaian Triwulan berhasil divalidasi \u2713');
+}
+
+
+function findSk(id){for(var i=0;i<MD.program.length;i++){var p=MD.program[i];for(var j=0;j<p.kegiatan.length;j++){var k=p.kegiatan[j];for(var l=0;l<k.sk.length;l++){if(k.sk[l].id===id)return{s:k.sk[l],k:k,p:p};}}}return null;}
+
+function openMod(skId){
+ var found=findSk(skId);if(!found)return;
+ var s=found.s,k=found.k,p=found.p;
+ var d=gSk(skId)||{deskripsi:'',pagu:0,fisik:Array(12).fill(0),keuangan:Array(12).fill(0),kendala:'',rtl:''};
+ var sa=d.pagu||0;
+ document.getElementById('m-t').textContent=s.nm;
+ document.getElementById('m-s').textContent=p.nm+' \u2192 '+k.nm;
+ var fR=MN.map(function(m,i){return'<td><input type="number" id="f'+i+'" value="'+(d.fisik[i]||'')+'" min="0" max="100" step="0.1" placeholder="0"/></td>';}).join('');
+ var kR=MN.map(function(m,i){return'<td><input type="number" id="k'+i+'" value="'+(d.keuangan[i]||'')+'" min="0" step="1000000" placeholder="0"/></td>';}).join('');
+ document.getElementById('m-body').innerHTML=
+  '<div class="tabs"><div class="tab act" onclick="swTab(0)">&#128221; Deskripsi Sub Kegiatan</div><div class="tab" onclick="swTab(1)">&#128200; Pagu &amp; Realisasi</div><div class="tab" onclick="swTab(2)">&#9888;&#65039; Kendala &amp; RTL</div></div>'
+  +'<div class="tab-c act" id="tc0">'
+  +'<div class="fg"><label class="fl">Deskripsi / Penjelasan Ringkas Isi Sub Kegiatan</label><textarea class="fi" id="inp-desk" rows="5" placeholder="Tuliskan penjelasan ringkas mengenai isi, tujuan, dan output utama dari sub kegiatan ini...">'+( d.deskripsi||'')+'</textarea></div>'
+  +'<div style="padding:8px 12px;background:rgba(45,212,191,.05);border-radius:6px;border-left:2px solid var(--teal);font-size:9.5px;color:var(--txm)">&#9432; Deskripsi ini akan ditampilkan pada halaman <strong>Program &amp; Anggaran</strong> sebagai ringkasan sub kegiatan.</div>'
+  +'</div>'
+  +'<div class="tab-c" id="tc1">'
+  +'<div class="info-row"><div class="ii"><div class="ii-l">Pagu Saat Ini</div><div class="ii-v" style="color:var(--gold)">'+(sa>0?rp(sa):'Belum diatur')+'</div></div><div class="ii"><div class="ii-l">Real. Keuangan</div><div class="ii-v" style="color:var(--grn)">'+rp(lv(d.keuangan))+'</div></div><div class="ii"><div class="ii-l">Real. Fisik</div><div class="ii-v" style="color:var(--teal)">'+pct(lv(d.fisik))+'</div></div>'+(sa>0?'<div class="ii"><div class="ii-l">% Serapan</div><div class="ii-v">'+pct(sa>0?(lv(d.keuangan)/sa)*100:0)+'</div></div>':'')+'</div>'
+  +'<div class="fg"><label class="fl">Pagu Anggaran Sub Kegiatan (Rp)</label><input class="fi" type="number" id="inp-pagu" value="'+(sa>0?sa:'')+'" min="0" step="1000000" placeholder="Masukkan jumlah pagu anggaran (Rp)"/></div>'
+  +'<div class="fg"><label class="fl">Realisasi Fisik &amp; Keuangan per Bulan (Kumulatif)</label><div style="overflow-x:auto"><table class="mt"><thead><tr><th style="text-align:left;padding:5px 9px;min-width:100px">Uraian</th>'+MN.map(function(m){return'<th>'+m+'</th>';}).join('')+'</tr></thead><tbody><tr><td class="rl">Fisik (%)</td>'+fR+'</tr><tr><td class="rl">Keuangan (Rp)</td>'+kR+'</tr></tbody></table></div><div class="exc-n">&#9432; Nilai <strong>kumulatif</strong> per bulan. Contoh: Jan=10%, Feb=22% artinya kolom Feb diisi 22.</div></div>'
+  +'</div>'
+  +'<div class="tab-c" id="tc2">'
+  +'<div class="fg"><label class="fl">Kendala Pelaksanaan</label><textarea class="fi" id="inp-kendala" rows="4" placeholder="Tuliskan kendala dan hambatan dalam pelaksanaan sub kegiatan...">'+( d.kendala||'')+'</textarea></div>'
+  +'<div class="fg"><label class="fl">Rencana Tindak Lanjut (RTL)</label><textarea class="fi" id="inp-rtl" rows="4" placeholder="Tuliskan rencana tindak lanjut untuk mengatasi kendala...">'+( d.rtl||'')+'</textarea></div>'
+  +'</div>'
+  +'<div style="display:flex;gap:9px;justify-content:flex-end;margin-top:8px;padding-top:12px;border-top:1px solid var(--cbr)"><button class="btn-s" onclick="closeModal()">Batal</button><button class="btn-p" onclick="saveMod(\''+skId+'\')">&#128190; Simpan Data</button></div>';
+ document.getElementById('mover').classList.add('open');
+ document.body.style.overflow='hidden';
+}
+
+function swTab(n){
+ document.querySelectorAll('#m-body .tab').forEach(function(t,i){t.classList.toggle('act',i===n);});
+ document.querySelectorAll('#m-body .tab-c').forEach(function(c,i){c.classList.toggle('act',i===n);});
+}
+
+function saveMod(skId){
+ var fisik=[],keuangan=[];
+ for(var i=0;i<12;i++){
+  fisik.push(parseFloat((document.getElementById('f'+i)||{}).value)||0);
+  keuangan.push(parseFloat((document.getElementById('k'+i)||{}).value)||0);
+ }
+ sSk(skId,{
+  deskripsi:(document.getElementById('inp-desk')||{}).value||'',
+  pagu:parseFloat((document.getElementById('inp-pagu')||{}).value)||0,
+  fisik:fisik,keuangan:keuangan,
+  kendala:(document.getElementById('inp-kendala')||{}).value||'',
+  rtl:(document.getElementById('inp-rtl')||{}).value||''
+ });
+ /* Auto-reset validasi — setiap pembaruan data wajib validasi ulang */
+ var wasVal=!!(gValSK(skId)&&gValSK(skId).validated);
+ sValSK(skId,{validated:false,resetAt:nowStr()});
+ closeModal();
+ var cv=document.querySelector('.view.act');
+ if(cv){if(cv.id==='view-exec')renderExec();else if(cv.id==='view-program')renderProgram();else if(cv.id==='view-inputsel')renderInputSel();}
+ if(wasVal){
+  showToast('Data disimpan. Validasi direset \u2014 perlu validasi ulang oleh Kepala Dinas &#9888;');
+ } else {
+  showToast('Data sub kegiatan berhasil disimpan \u2713');
+ }
+}
+
+function saveTWRow(sasId,ii,iid){
+ var tw=[];
+ for(var ti=0;ti<4;ti++){
+  var el2=document.getElementById(iid+'_'+ti);
+  tw.push(el2?el2.value:'');
+ }
+ sQtw(sasId,ii,tw);
+ /* Auto-reset validasi — setiap pembaruan data wajib validasi ulang */
+ var wasVal=!!(gValTW(sasId,ii)&&gValTW(sasId,ii).validated);
+ sValTW(sasId,ii,{validated:false,resetAt:nowStr()});
+ renderInputKPI();
+ if(wasVal){
+  showToast('Data disimpan. Validasi direset \u2014 perlu validasi ulang oleh Kepala Dinas &#9888;');
+ } else {
+  showToast('Capaian disimpan \u2713 \u2014 '+tw.filter(function(v){return v;}).length+' triwulan terisi');
+ }
+}
+
+function closeModal(){document.getElementById('mover').classList.remove('open');document.body.style.overflow='';}
+
+// ================================================================
+// TW MODAL (quick input per indicator)
+// ================================================================
+function openTWMod(sasId,indIdx,indNm,indTgt){
+ var tw=gQtw(sasId,indIdx);
+ document.getElementById('mtw-t').textContent='Input Capaian Triwulan';
+ document.getElementById('mtw-s').textContent=indNm;
+ var h='<div style="padding:9px 12px;background:rgba(255,255,255,.025);border-radius:7px;margin-bottom:14px;font-size:10px;color:var(--txm)">Target: <strong style="color:var(--gold)">'+indTgt+'</strong></div>';
+ h+='<div class="g2" style="margin-bottom:12px">';
+ ['TW 1 (Jan\u2013Mar)','TW 2 (Apr\u2013Jun)','TW 3 (Jul\u2013Sep)','TW 4 (Okt\u2013Des)'].forEach(function(lbl,ti){
+  h+='<div class="fg"><label class="fl">'+lbl+'</label><input class="fi" type="text" id="mtw'+ti+'" value="'+tw[ti]+'" placeholder="Contoh: 72,5 tahun"/></div>';
+ });
+ h+='</div>';
+ h+='<div style="display:flex;gap:9px;justify-content:flex-end;padding-top:10px;border-top:1px solid var(--cbr)"><button class="btn-s" onclick="closeTWModal()">Batal</button><button class="btn-p" onclick="saveTWMod(\''+sasId+'\','+indIdx+')">&#128190; Simpan</button></div>';
+ document.getElementById('mtw-body').innerHTML=h;
+ document.getElementById('mover-tw').classList.add('open');
+ document.body.style.overflow='hidden';
+}
+
+function saveTWMod(sasId,indIdx){
+ var tw=[];
+ for(var i=0;i<4;i++){tw.push((document.getElementById('mtw'+i)||{}).value||'');}
+ sQtw(sasId,indIdx,tw);
+ closeTWModal();
+ var cv=document.querySelector('.view.act');
+ if(cv&&cv.id==='view-cascade')renderCascade();
+ else if(cv&&cv.id==='view-inputkpi')renderInputKPI();
+ showToast('Capaian triwulan berhasil disimpan \u2713');
+}
+
+function closeTWModal(){document.getElementById('mover-tw').classList.remove('open');document.body.style.overflow='';}
+
+// ================================================================
+// MISC
+// ================================================================
+function showToast(msg){
+ var t=document.createElement('div');t.textContent=msg;
+ t.style.cssText='position:fixed;bottom:18px;right:18px;background:var(--grn);color:#000;padding:8px 16px;border-radius:7px;font-size:11.5px;font-weight:600;z-index:9999;box-shadow:0 4px 18px rgba(34,197,94,.35)';
+ document.body.appendChild(t);setTimeout(function(){t.remove();},2500);
+}
+
+function tog(id){
+ var b=document.getElementById('b-'+id),c=document.getElementById('cv-'+id),h=c?c.closest('.pt-hdr,.kg-hdr'):null;
+ if(!b)return;var o=b.classList.toggle('open');
+ if(c)c.classList.toggle('open',o);if(h)h.classList.toggle('open',o);
+}
+
+var VWS={
+ exec:{el:'view-exec',t:'Dashboard Eksekutif',s:'Monitoring Kinerja & Realisasi Anggaran Terpadu',r:renderExec},
+ cascade:{el:'view-cascade',t:'Cascading KPI',s:'Tujuan \u2192 Sasaran Eselon II/III/IV \u2192 Program | Capaian per Triwulan',r:renderCascade},
+ program:{el:'view-program',t:'Program & Anggaran',s:'Ringkasan pagu, realisasi, deskripsi, kendala & RTL per sub kegiatan',r:renderProgram},
+ inputsel:{el:'view-inputsel',t:'Input Realisasi Sub Kegiatan',s:'Klik sub kegiatan untuk input deskripsi, pagu, realisasi fisik/keuangan, kendala & RTL',r:renderInputSel},
+ inputkpi:{el:'view-inputkpi',t:'Input Capaian Indikator Triwulan',s:'Input capaian TW1\u2013TW4 untuk seluruh indikator kinerja sasaran',r:renderInputKPI}
+};
+
+function sw(v){
+ if(!VWS[v])return;
+ document.querySelectorAll('.view').forEach(function(el){el.classList.remove('act');});
+ document.querySelectorAll('.ni').forEach(function(el){el.classList.remove('act');});
+ document.getElementById(VWS[v].el).classList.add('act');
+ var ni=document.querySelector('.ni[data-v="'+v+'"]');if(ni)ni.classList.add('act');
+ document.getElementById('hdr-t').textContent=VWS[v].t;
+ document.getElementById('hdr-s').textContent=VWS[v].s;
+ VWS[v].r();
+}
+
+document.getElementById('mover').addEventListener('click',function(e){if(e.target===this)closeModal();});
+document.getElementById('mover-tw').addEventListener('click',function(e){if(e.target===this)closeTWModal();});
+
+function updDate(){
+ var d=new Date();
+ var el=document.getElementById('hdr-d');
+ if(el)el.innerHTML=d.toLocaleDateString('id-ID',{weekday:'long',year:'numeric',month:'long',day:'numeric'})+'<br>'+MN[d.getMonth()]+' '+d.getFullYear();
+}
+
+// Check session on load
+window.addEventListener('load',function(){
+ var u=sessionStorage.getItem('cur_user');
+ if(u){try{var uo=JSON.parse(u);showApp(uo);}catch(e){}}
+});
+
+</script>
+</body>
+</html>
